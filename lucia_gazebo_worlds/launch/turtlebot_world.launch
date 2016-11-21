@@ -20,7 +20,7 @@
 
     <include file="$(find lucia_gazebo_worlds)/launch/includes/$(arg base).launch.xml">
       <arg name="robot_name"  value="turtlebot1" />
-      <arg name="init_pose" value="-x 1.5 -y 5.0 -z 0" />
+      <arg name="init_pose" value="-x 4.2 -y 4.2 -z 0" />
       <arg name="base" value="$(arg base)"/>
       <arg name="stacks" value="$(arg stacks)"/>
       <arg name="3d_sensor" value="$(arg 3d_sensor)"/>
@@ -48,7 +48,7 @@
 
     <include file="$(find lucia_gazebo_worlds)/launch/includes/$(arg base).launch.xml">
       <arg name="robot_name"  value="turtlebot2" />
-      <arg name="init_pose" value="-x 3.2 -y 4.8 -z 0" />
+      <arg name="init_pose" value="-x 5.3 -y 3.8 -z 0" />
       <arg name="base" value="$(arg base)"/>
       <arg name="stacks" value="$(arg stacks)"/>
       <arg name="3d_sensor" value="$(arg 3d_sensor)"/>
@@ -76,7 +76,7 @@
 
     <include file="$(find lucia_gazebo_worlds)/launch/includes/$(arg base).launch.xml">
       <arg name="robot_name"  value="turtlebot3" />
-      <arg name="init_pose" value="-x 4.5 -y 5.0 -z 0" />
+      <arg name="init_pose" value="-x 6.3 -y 4.1 -z 0" />
       <arg name="base" value="$(arg base)"/>
       <arg name="stacks" value="$(arg stacks)"/>
       <arg name="3d_sensor" value="$(arg 3d_sensor)"/>
