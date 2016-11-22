@@ -11,6 +11,18 @@
   <arg name="turtlebot2" default="true" />
   <arg name="turtlebot3" default="true" />
 
+  <arg name="t1_initial_pose_x" default="4.2"/>
+  <arg name="t1_initial_pose_y" default="4.2"/>
+  <arg name="t1_initial_pose_a" default="0.0"/>
+
+  <arg name="t2_initial_pose_x" default="5.3"/>
+  <arg name="t2_initial_pose_y" default="3.8"/>
+  <arg name="t2_initial_pose_a" default="0.0"/>
+
+  <arg name="t3_initial_pose_x" default="6.3"/>
+  <arg name="t3_initial_pose_y" default="4.1"/>
+  <arg name="t3_initial_pose_a" default="0.0"/>
+
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="use_sim_time" value="true"/>
     <arg name="debug" value="false"/>
@@ -24,7 +36,7 @@
 
     <include file="$(find lucia_gazebo_worlds)/launch/includes/$(arg base).launch.xml">
       <arg name="robot_name"  value="turtlebot1" />
-      <arg name="init_pose" value="-x 4.2 -y 4.2 -z 0" />
+      <arg name="init_pose" value="-x $(arg t1_initial_pose_x) -y $(arg t1_initial_pose_y) -z 0 -Y $(arg t1_initial_pose_a)" />
       <arg name="base" value="$(arg base)"/>
       <arg name="stacks" value="$(arg stacks)"/>
       <arg name="3d_sensor" value="$(arg 3d_sensor)"/>
@@ -52,7 +64,7 @@
 
     <include file="$(find lucia_gazebo_worlds)/launch/includes/$(arg base).launch.xml">
       <arg name="robot_name"  value="turtlebot2" />
-      <arg name="init_pose" value="-x 5.3 -y 3.8 -z 0" />
+      <arg name="init_pose" value="-x $(arg t2_initial_pose_x) -y $(arg t2_initial_pose_y) -z 0 -Y $(arg t2_initial_pose_a)" />
       <arg name="base" value="$(arg base)"/>
       <arg name="stacks" value="$(arg stacks)"/>
       <arg name="3d_sensor" value="$(arg 3d_sensor)"/>
@@ -80,7 +92,7 @@
 
     <include file="$(find lucia_gazebo_worlds)/launch/includes/$(arg base).launch.xml">
       <arg name="robot_name"  value="turtlebot3" />
-      <arg name="init_pose" value="-x 6.3 -y 4.1 -z 0" />
+      <arg name="init_pose" value="-x $(arg t3_initial_pose_x) -y $(arg t3_initial_pose_y) -z 0 -Y $(arg t3_initial_pose_a)" />
       <arg name="base" value="$(arg base)"/>
       <arg name="stacks" value="$(arg stacks)"/>
       <arg name="3d_sensor" value="$(arg 3d_sensor)"/>
