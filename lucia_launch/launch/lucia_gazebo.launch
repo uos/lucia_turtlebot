@@ -1,0 +1,66 @@
+<launch>
+  <!-- This launch file starts the whole lucia system in Gazebo -->
+
+  <arg name="map_file" default="$(find lucia_gazebo_worlds)/maps/lucia_arena.yaml"/>
+
+  <arg name="turtlebot1" default="true" />
+  <arg name="turtlebot2" default="true" />
+  <arg name="turtlebot3" default="true" />
+
+  <arg name="t1_initial_pose_x" default="4.2"/>
+  <arg name="t1_initial_pose_y" default="4.2"/>
+  <arg name="t1_initial_pose_a" default="0.0"/>
+
+  <arg name="t2_initial_pose_x" default="5.3"/>
+  <arg name="t2_initial_pose_y" default="3.8"/>
+  <arg name="t2_initial_pose_a" default="0.0"/>
+
+  <arg name="t3_initial_pose_x" default="6.3"/>
+  <arg name="t3_initial_pose_y" default="4.1"/>
+  <arg name="t3_initial_pose_a" default="0.0"/>
+
+  <!-- Gazebo -->
+  <include file="$(find lucia_gazebo_worlds)/launch/lucia_world.launch">
+    <arg name="turtlebot1" value="$(arg turtlebot1)" />
+    <arg name="turtlebot2" value="$(arg turtlebot2)" />
+    <arg name="turtlebot3" value="$(arg turtlebot3)" />
+
+    <arg name="t1_initial_pose_x" value="$(arg t1_initial_pose_x)" />
+    <arg name="t1_initial_pose_y" value="$(arg t1_initial_pose_y)" />
+    <arg name="t1_initial_pose_a" value="$(arg t1_initial_pose_a)" />
+
+    <arg name="t2_initial_pose_x" value="$(arg t2_initial_pose_x)" />
+    <arg name="t2_initial_pose_y" value="$(arg t2_initial_pose_y)" />
+    <arg name="t2_initial_pose_a" value="$(arg t2_initial_pose_a)" />
+
+    <arg name="t3_initial_pose_x" value="$(arg t3_initial_pose_x)" />
+    <arg name="t3_initial_pose_y" value="$(arg t3_initial_pose_y)" />
+    <arg name="t3_initial_pose_a" value="$(arg t3_initial_pose_a)" />
+  </include>
+
+  <!-- Navigation -->
+  <include file="$(find multi_turtlebot_navigation)/launch/move_base_amcl.launch">
+    <arg name="map_file" value="$(arg map_file)" />
+
+    <arg name="turtlebot1" value="$(arg turtlebot1)" />
+    <arg name="turtlebot2" value="$(arg turtlebot2)" />
+    <arg name="turtlebot3" value="$(arg turtlebot3)" />
+
+    <arg name="t1_initial_pose_x" value="$(arg t1_initial_pose_x)" />
+    <arg name="t1_initial_pose_y" value="$(arg t1_initial_pose_y)" />
+    <arg name="t1_initial_pose_a" value="$(arg t1_initial_pose_a)" />
+
+    <arg name="t2_initial_pose_x" value="$(arg t2_initial_pose_x)" />
+    <arg name="t2_initial_pose_y" value="$(arg t2_initial_pose_y)" />
+    <arg name="t2_initial_pose_a" value="$(arg t2_initial_pose_a)" />
+
+    <arg name="t3_initial_pose_x" value="$(arg t3_initial_pose_x)" />
+    <arg name="t3_initial_pose_y" value="$(arg t3_initial_pose_y)" />
+    <arg name="t3_initial_pose_a" value="$(arg t3_initial_pose_a)" />
+  </include>
+
+  <!-- RViz -->
+  <node pkg="rviz" type="rviz" name="rviz" output="screen"
+    args="-d $(find multi_turtlebot_navigation)/rviz/robot_navigation.rviz" />
+</launch>
+

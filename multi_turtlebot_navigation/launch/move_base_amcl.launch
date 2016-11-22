@@ -1,0 +1,85 @@
+<launch>
+  <arg name="map_file" default="$(find lucia_gazebo_worlds)/maps/lucia_arena.yaml"/>
+
+  <arg name="turtlebot1" default="true" />
+  <arg name="turtlebot2" default="true" />
+  <arg name="turtlebot3" default="true" />
+
+  <arg name="t1_initial_pose_x" default="4.2"/>
+  <arg name="t1_initial_pose_y" default="4.2"/>
+  <arg name="t1_initial_pose_a" default="0.0"/>
+
+  <arg name="t2_initial_pose_x" default="5.3"/>
+  <arg name="t2_initial_pose_y" default="3.8"/>
+  <arg name="t2_initial_pose_a" default="0.0"/>
+
+  <arg name="t3_initial_pose_x" default="6.3"/>
+  <arg name="t3_initial_pose_y" default="4.1"/>
+  <arg name="t3_initial_pose_a" default="0.0"/>
+
+  <!-- Map server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+  <!-- ################# turtlebot1 ############## -->
+  <group ns="turtlebot1" if="$(arg turtlebot1)">
+    <param name="tf_prefix" value="turtlebot1_tf" />
+
+    <!-- Localization -->
+    <include file="$(find multi_turtlebot_navigation)/launch/includes/amcl.launch.xml">
+      <arg name="use_map_topic"  value="true"/>
+      <arg name="initial_pose_x" value="$(arg t1_initial_pose_x)"/>
+      <arg name="initial_pose_y" value="$(arg t1_initial_pose_y)"/>
+      <arg name="initial_pose_a" value="$(arg t1_initial_pose_a)"/>
+      <arg name="odom_frame_id"  value="turtlebot1_tf/odom"/>
+      <arg name="base_frame_id"  value="turtlebot1_tf/base_footprint"/>
+    </include>
+
+    <!-- Move base -->
+    <remap from="map" to="/map" />
+    <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
+      <arg name="global_frame_id" value="/map" />
+    </include>
+  </group>
+
+  <!-- ################# turtlebot2 ############## -->
+  <group ns="turtlebot2" if="$(arg turtlebot2)">
+    <param name="tf_prefix" value="turtlebot2_tf" />
+
+    <!-- Localization -->
+    <include file="$(find multi_turtlebot_navigation)/launch/includes/amcl.launch.xml">
+      <arg name="use_map_topic"  value="true"/>
+      <arg name="initial_pose_x" value="$(arg t2_initial_pose_x)"/>
+      <arg name="initial_pose_y" value="$(arg t2_initial_pose_y)"/>
+      <arg name="initial_pose_a" value="$(arg t2_initial_pose_a)"/>
+      <arg name="odom_frame_id"  value="turtlebot2_tf/odom"/>
+      <arg name="base_frame_id"  value="turtlebot2_tf/base_footprint"/>
+    </include>
+
+    <!-- Move base -->
+    <remap from="map" to="/map" />
+    <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
+      <arg name="global_frame_id" value="/map" />
+    </include>
+  </group>
+
+  <!-- ################# turtlebot3 ############## -->
+  <group ns="turtlebot3" if="$(arg turtlebot3)">
+    <param name="tf_prefix" value="turtlebot3_tf" />
+
+    <!-- Localization -->
+    <include file="$(find multi_turtlebot_navigation)/launch/includes/amcl.launch.xml">
+      <arg name="use_map_topic"  value="true"/>
+      <arg name="initial_pose_x" value="$(arg t3_initial_pose_x)"/>
+      <arg name="initial_pose_y" value="$(arg t3_initial_pose_y)"/>
+      <arg name="initial_pose_a" value="$(arg t3_initial_pose_a)"/>
+      <arg name="odom_frame_id"  value="turtlebot3_tf/odom"/>
+      <arg name="base_frame_id"  value="turtlebot3_tf/base_footprint"/>
+    </include>
+
+    <!-- Move base -->
+    <remap from="map" to="/map" />
+    <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
+      <arg name="global_frame_id" value="/map" />
+    </include>
+  </group>
+</launch>

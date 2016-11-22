@@ -1,0 +1,17 @@
+<package>
+  <name>multi_turtlebot_navigation</name>
+  <version>1.0.0</version>
+  <description>Launch files to bring up navigation (move_base, amcl) on multiple turtlebots.</description>
+
+  <maintainer email="martin.guenther@dfki.de">Martin Guenther</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">https://gitlab.informatik.uni-osnabrueck.de/lucia2016/lucia_turtlebot</url>
+  <url type="repository">https://gitlab.informatik.uni-osnabrueck.de/lucia2016/lucia_turtlebot.git</url>
+  <url type="bugtracker">https://gitlab.informatik.uni-osnabrueck.de/lucia2016/lucia_turtlebot/issues</url>
+
+  <author email="martin.guenther@dfki.de">Martin Guenther</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+</package>
