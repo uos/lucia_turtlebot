@@ -7,6 +7,10 @@
   <arg name="stacks"    value="$(optenv TURTLEBOT_STACKS hexagons)"/>  <!-- circles, hexagons -->
   <arg name="3d_sensor" value="$(optenv TURTLEBOT_3D_SENSOR kinect)"/>  <!-- kinect, asus_xtion_pro -->
 
+  <arg name="turtlebot1" default="true" />
+  <arg name="turtlebot2" default="true" />
+  <arg name="turtlebot3" default="true" />
+
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="use_sim_time" value="true"/>
     <arg name="debug" value="false"/>
@@ -15,7 +19,7 @@
   </include>
 
   <!-- ################# turtlebot1 ############## -->
-  <group ns="turtlebot1">
+  <group ns="turtlebot1" if="$(arg turtlebot1)">
     <param name="tf_prefix" value="turtlebot1_tf" />
 
     <include file="$(find lucia_gazebo_worlds)/launch/includes/$(arg base).launch.xml">
@@ -43,7 +47,7 @@
   </group>
 
   <!-- ################# turtlebot2 ############## -->
-  <group ns="turtlebot2">
+  <group ns="turtlebot2" if="$(arg turtlebot2)">
     <param name="tf_prefix" value="turtlebot2_tf" />
 
     <include file="$(find lucia_gazebo_worlds)/launch/includes/$(arg base).launch.xml">
@@ -71,7 +75,7 @@
   </group>
 
   <!-- ################# turtlebot3 ############## -->
-  <group ns="turtlebot3">
+  <group ns="turtlebot3" if="$(arg turtlebot3)">
     <param name="tf_prefix" value="turtlebot3_tf" />
 
     <include file="$(find lucia_gazebo_worlds)/launch/includes/$(arg base).launch.xml">
