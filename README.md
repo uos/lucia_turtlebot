@@ -25,7 +25,7 @@ Create a Catkin work space, clone and build our ROS stack:
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/src/
 catkin_init_workspace
-git clone <this package>
+git clone https://github.com/uos/lucia_turtlebot.git
 cd lucia_turtlebot
 
 # Use rosdep to install all dependencies (including ROS itself)
