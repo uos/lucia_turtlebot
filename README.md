@@ -45,6 +45,9 @@ Running everything in Gazebo
 roslaunch lucia_launch lucia_gazebo.launch
 ```
 
+Now, you can use the "2D Nav Goal" tool in RViz to send navigation goals to the
+first turtlebot. You can command the other two turtlebots by opening
+"Panels" -> "Tool Properties" and changing the "2D Nav Goal" topic.
 
 Package overview
 ----------------
