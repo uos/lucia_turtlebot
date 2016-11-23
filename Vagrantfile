@@ -15,7 +15,7 @@ Vagrant.configure(2) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.network "private_network", ip: "192.168.37.15"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -65,6 +65,11 @@ Vagrant.configure(2) do |config|
     cd $CATKIN_WS
 
     catkin_make -DCMAKE_BUILD_TYPE=Release install
+
+    echo 'export LC_ALL="en_US.UTF-8"' >> ~/.bashrc
+    echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc
+    echo 'export ROS_MASTER_URI=http://192.168.37.15:11311' >> ~/.bashrc
+    echo 'export ROS_HOSTNAME=192.168.37.15' >> ~/.bashrc
   SHELL
   config.vm.provision "shell", inline: $script, privileged: false
 end
