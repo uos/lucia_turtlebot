@@ -25,7 +25,7 @@
   <run_depend>robot_pose_ekf</run_depend>
   <run_depend>robot_state_publisher</run_depend>
   <run_depend>turtlebot_bringup</run_depend>
-  <run_depend>turtlebot_description</run_depend>
+  <run_depend>lucia_turtlebot_description</run_depend>
   <run_depend>turtlebot_navigation</run_depend>
   <run_depend>xacro</run_depend>
 
