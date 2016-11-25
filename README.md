@@ -24,7 +24,6 @@ Create a Catkin work space, clone and build our ROS stack:
 ```bash
 mkdir -p ~/catkin_ws/src
 cd ~/catkin_ws/src/
-catkin_init_workspace
 git clone https://github.com/uos/lucia_turtlebot.git
 cd lucia_turtlebot
 
@@ -32,6 +31,7 @@ cd lucia_turtlebot
 rosdep install --from-paths ./ -i -y --rosdistro indigo
 
 source /opt/ros/indigo/setup.bash
+catkin_init_workspace
 cd ~/catkin_ws
 
 catkin_make -DCMAKE_BUILD_TYPE=Release
