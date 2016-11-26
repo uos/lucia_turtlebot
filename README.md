@@ -29,6 +29,7 @@ cd lucia_turtlebot
 
 # Use rosdep to install all dependencies (including ROS itself)
 rosdep install --from-paths ./ -i -y --rosdistro indigo
+sudo apt-get install -qq -y ros-indigo-rviz
 
 source /opt/ros/indigo/setup.bash
 catkin_init_workspace
@@ -36,6 +37,16 @@ cd ~/catkin_ws
 
 catkin_make -DCMAKE_BUILD_TYPE=Release
 ```
+
+The generated `setup.bash` file has to be sourced in each terminal that uses
+this catkin workspace. It's best to add it to the `.bashrc` so that it is
+sourced automatically whenever a new terminal is opened:
+
+```bash
+echo "source ~/catkin_ws/devel/setup.bash" >> .bashrc
+```
+
+Now close all running terminals and open a new one.
 
 
 Running everything in Gazebo
