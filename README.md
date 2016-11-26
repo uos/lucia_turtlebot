@@ -14,7 +14,7 @@ Install prerequisites:
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
 wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
 sudo apt-get update -qq
-sudo apt-get install -qq -y python-rosdep ros-indigo-catkin git build-essential cmake
+sudo apt-get install -qq -y python-rosdep python-wstool ros-indigo-catkin git build-essential cmake
 sudo rosdep init
 rosdep update
 ```
@@ -23,9 +23,8 @@ Create a Catkin work space, clone and build our ROS stack:
 
 ```bash
 mkdir -p ~/catkin_ws/src
-cd ~/catkin_ws/src/
-git clone https://github.com/uos/lucia_turtlebot.git
-cd lucia_turtlebot
+cd ~/catkin_ws/src
+wstool init -j4 . https://raw.githubusercontent.com/uos/uos_rosinstalls/master/lucia2016-indigo.rosinstall
 
 # Use rosdep to install all dependencies (including ROS itself)
 rosdep install --from-paths ./ -i -y --rosdistro indigo
@@ -49,8 +48,23 @@ echo "source ~/catkin_ws/devel/setup.bash" >> .bashrc
 Now close all running terminals and open a new one.
 
 
-Running everything in Gazebo
-----------------------------
+Updating
+--------
+
+To update to the latest version of all packages, do this:
+
+```bash
+cd ~/catkin_ws/src
+wstool merge https://raw.githubusercontent.com/uos/uos_rosinstalls/master/lucia2016-indigo.rosinstall
+wstool up
+rosdep install --from-paths ./ -i -y --rosdistro indigo
+cd ~/catkin_ws
+catkin_make -DCMAKE_BUILD_TYPE=Release
+```
+
+
+Running in Gazebo
+-----------------
 
 ```bash
 roslaunch lucia_launch lucia_gazebo.launch
@@ -59,6 +73,7 @@ roslaunch lucia_launch lucia_gazebo.launch
 Now, you can use the "2D Nav Goal" tool in RViz to send navigation goals to the
 first turtlebot. You can command the other two turtlebots by opening
 "Panels" -> "Tool Properties" and changing the "2D Nav Goal" topic.
+
 
 Package overview
 ----------------
