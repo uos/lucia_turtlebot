@@ -71,8 +71,9 @@ roslaunch lucia_launch lucia_gazebo.launch
 ```
 
 Now, you can use the "2D Nav Goal" tool in RViz to send navigation goals to the
-first turtlebot. You can command the other two turtlebots by opening
-"Panels" -> "Tool Properties" and changing the "2D Nav Goal" topic.
+first turtlebot. If the robot moves to the goal position, you have everything
+set up correctly. You can command the other two turtlebots by opening "Panels"
+-> "Tool Properties" and changing the "2D Nav Goal" topic.
 
 
 Package overview
