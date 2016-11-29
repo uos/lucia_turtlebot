@@ -494,6 +494,50 @@ Visualization Manager:
           Position Tolerance: 0.1
           Topic: /turtlebot1/odom
           Value: false
+        - Class: rviz/Group
+          Displays:
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot1/next_best_view_marker
+              Name: next_best_view markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot1/servicetest_marker
+              Name: nbv_servicetest markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot1/object_search_marker
+              Name: object_search markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot1/race_object_search_manager_test
+              Name: object_search_manager_test markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot1/turtlebot_agent_dbg
+              Name: turtlebot_agent debug markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+          Enabled: true
+          Name: Active Perception
       Enabled: true
       Name: turtlebot1
     - Class: rviz/Group
@@ -895,6 +939,50 @@ Visualization Manager:
           Position Tolerance: 0.1
           Topic: /turtlebot2/odom
           Value: false
+        - Class: rviz/Group
+          Displays:
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot2/next_best_view_marker
+              Name: next_best_view markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot2/servicetest_marker
+              Name: nbv_servicetest markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot2/object_search_marker
+              Name: object_search markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot2/race_object_search_manager_test
+              Name: object_search_manager_test markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot2/turtlebot_agent_dbg
+              Name: turtlebot_agent debug markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+          Enabled: true
+          Name: Active Perception
       Enabled: true
       Name: turtlebot2
     - Class: rviz/Group
@@ -1296,6 +1384,50 @@ Visualization Manager:
           Position Tolerance: 0.1
           Topic: /turtlebot3/odom
           Value: false
+        - Class: rviz/Group
+          Displays:
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot3/next_best_view_marker
+              Name: next_best_view markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot3/servicetest_marker
+              Name: nbv_servicetest markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot3/object_search_marker
+              Name: object_search markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot3/race_object_search_manager_test
+              Name: object_search_manager_test markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+            - Class: rviz/Marker
+              Enabled: true
+              Marker Topic: /turtlebot3/turtlebot_agent_dbg
+              Name: turtlebot_agent debug markers
+              Namespaces:
+                {}
+              Queue Size: 100
+              Value: true
+          Enabled: true
+          Name: Active Perception
       Enabled: true
       Name: turtlebot3
   Enabled: true
