@@ -142,11 +142,6 @@ Visualization Manager:
               Alpha: 1
               Show Axes: false
               Show Trail: false
-            mount_asus_xtion_pro_link:
-              Alpha: 1
-              Show Axes: false
-              Show Trail: false
-              Value: true
             plate_bottom_link:
               Alpha: 1
               Show Axes: false
@@ -242,6 +237,32 @@ Visualization Manager:
               Show Axes: false
               Show Trail: false
               Value: true
+            pole_xtion_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            top_camera_depth_frame:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            top_camera_depth_optical_frame:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            top_camera_link:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+              Value: true
+            top_camera_rgb_frame:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
+            top_camera_rgb_optical_frame:
+              Alpha: 1
+              Show Axes: false
+              Show Trail: false
             wheel_left_link:
               Alpha: 1
               Show Axes: false
@@ -278,7 +299,7 @@ Visualization Manager:
           Min Intensity: 1
           Name: LaserScan (kinect)
           Position Transformer: XYZ
-          Queue Size: 10
+          Queue Size: 1
           Selectable: true
           Size (Pixels): 3
           Size (m): 0.03
@@ -679,7 +700,7 @@ Visualization Manager:
           Min Intensity: 1
           Name: LaserScan (kinect)
           Position Transformer: XYZ
-          Queue Size: 10
+          Queue Size: 1
           Selectable: true
           Size (Pixels): 3
           Size (m): 0.03
@@ -1080,7 +1101,7 @@ Visualization Manager:
           Min Intensity: 1
           Name: LaserScan (kinect)
           Position Transformer: XYZ
-          Queue Size: 10
+          Queue Size: 1
           Selectable: true
           Size (Pixels): 3
           Size (m): 0.03
