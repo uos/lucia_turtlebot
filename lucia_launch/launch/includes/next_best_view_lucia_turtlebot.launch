@@ -1,0 +1,127 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="sim" default="false" />
+  <arg name="map_file_only_walls" default="$(find lucia_gazebo_worlds)/maps/lucia_arena_only_walls.yaml"/>
+
+  <arg name="turtlebot1" default="true" />
+  <arg name="turtlebot2" default="true" />
+  <arg name="turtlebot3" default="true" />
+
+  <node if="$(arg sim)" name="map_server_only_walls" pkg="map_server" type="map_server" args="$(arg map_file_only_walls)" ns="/only_walls" output="screen">
+    <param name="frame_id" type="string" value="/map"/>
+  </node>
+
+  <!-- ################# turtlebot1 ############## -->
+  <group ns="turtlebot1" if="$(arg turtlebot1)">
+    <param name="tf_prefix" value="turtlebot1_tf" />
+
+    <node if="$(arg sim)" name="point_cloud_2_motion_filter" pkg="sensor_motion_filter" type="point_cloud_2_motion_filter" output="screen" respawn="true">
+      <param name="static_frame" type="string" value="/map" />
+      <param name="block_time"   type="double" value="3.0" />
+      <param name="max_distance" type="double" value="0.01" />
+      <param name="max_rotation" type="double" value="0.002" />
+      <remap from="cloud_in" to="top_camera/depth/points" />
+      <remap from="cloud_out" to="top_camera/depth/motion_filtered/points" />
+    </node>
+
+    <node     if="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth/motion_filtered/points            2 top_camera/depth/motion_filtered/throttled/points" />
+    <node unless="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth_registered/motion_filtered/points 2 top_camera/depth_registered/throttled/points" />
+
+    <node name="next_best_view_node" pkg="next_best_view_sampling" type="next_best_view_node" output="screen" respawn="true">
+      <!-- camera constraints (top xtion on gazebo lucia turtlebot)-->
+      <param name="height_min" type="double" value="0.991" />
+      <param name="height_max" type="double" value="0.991" />
+      <param name="pitch_min"  type="double" value="-0.785" />
+      <param name="pitch_max"  type="double" value="-0.785" />
+      <param name="range_min"  type="double" value="0.4" />
+      <param name="range_max"  type="double" value="3.0" />
+      <param name="hfov"       type="double" value="1.01229097" />
+      <param name="vfov"       type="double" value="0.785398163" />
+      <param name="roll"       type="double" value="0.0" />
+      <!-- frames / topics -->
+      <param if="$(arg sim)" name="load_2dmap" type="bool" value="true" />
+      <remap if="$(arg sim)" from="/map" to="/only_walls/map" />
+      <param name="wall_height_2dmap" value="1.0" />
+      <param name="world_frame_id" type="string" value="/map" />
+      <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
+      <remap if="$(arg sim)" from="cloud_in" to="top_camera/depth/motion_filtered/throttled/points" />
+      <remap unless="$(arg sim)" from="cloud_in" to="top_camera/depth_registered/throttled/points" />
+    </node>
+  </group>
+
+  <!-- ################# turtlebot2 ############## -->
+  <group ns="turtlebot2" if="$(arg turtlebot2)">
+    <param name="tf_prefix" value="turtlebot2_tf" />
+
+    <node if="$(arg sim)" name="point_cloud_2_motion_filter" pkg="sensor_motion_filter" type="point_cloud_2_motion_filter" output="screen" respawn="true">
+      <param name="static_frame" type="string" value="/map" />
+      <param name="block_time"   type="double" value="3.0" />
+      <param name="max_distance" type="double" value="0.01" />
+      <param name="max_rotation" type="double" value="0.002" />
+      <remap from="cloud_in" to="top_camera/depth/points" />
+      <remap from="cloud_out" to="top_camera/depth/motion_filtered/points" />
+    </node>
+
+    <node     if="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth/motion_filtered/points            2 top_camera/depth/motion_filtered/throttled/points" />
+    <node unless="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth_registered/motion_filtered/points 2 top_camera/depth_registered/throttled/points" />
+
+    <node name="next_best_view_node" pkg="next_best_view_sampling" type="next_best_view_node" output="screen" respawn="true">
+      <!-- camera constraints (top xtion on gazebo lucia turtlebot)-->
+      <param name="height_min" type="double" value="0.991" />
+      <param name="height_max" type="double" value="0.991" />
+      <param name="pitch_min"  type="double" value="-0.785" />
+      <param name="pitch_max"  type="double" value="-0.785" />
+      <param name="range_min"  type="double" value="0.4" />
+      <param name="range_max"  type="double" value="3.0" />
+      <param name="hfov"       type="double" value="1.01229097" />
+      <param name="vfov"       type="double" value="0.785398163" />
+      <param name="roll"       type="double" value="0.0" />
+      <!-- frames / topics -->
+      <param if="$(arg sim)" name="load_2dmap" type="bool" value="true" />
+      <remap if="$(arg sim)" from="/map" to="/only_walls/map" />
+      <param name="wall_height_2dmap" value="1.0" />
+      <param name="world_frame_id" type="string" value="/map" />
+      <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
+      <remap if="$(arg sim)" from="cloud_in" to="top_camera/depth/motion_filtered/throttled/points" />
+      <remap unless="$(arg sim)" from="cloud_in" to="top_camera/depth_registered/throttled/points" />
+    </node>
+  </group>
+
+  <!-- ################# turtlebot3 ############## -->
+  <group ns="turtlebot3" if="$(arg turtlebot3)">
+    <param name="tf_prefix" value="turtlebot3_tf" />
+
+    <node if="$(arg sim)" name="point_cloud_2_motion_filter" pkg="sensor_motion_filter" type="point_cloud_2_motion_filter" output="screen" respawn="true">
+      <param name="static_frame" type="string" value="/map" />
+      <param name="block_time"   type="double" value="3.0" />
+      <param name="max_distance" type="double" value="0.01" />
+      <param name="max_rotation" type="double" value="0.002" />
+      <remap from="cloud_in" to="top_camera/depth/points" />
+      <remap from="cloud_out" to="top_camera/depth/motion_filtered/points" />
+    </node>
+
+    <node     if="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth/motion_filtered/points            2 top_camera/depth/motion_filtered/throttled/points" />
+    <node unless="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth_registered/motion_filtered/points 2 top_camera/depth_registered/throttled/points" />
+
+    <node name="next_best_view_node" pkg="next_best_view_sampling" type="next_best_view_node" output="screen" respawn="true">
+      <!-- camera constraints (top xtion on gazebo lucia turtlebot)-->
+      <param name="height_min" type="double" value="0.991" />
+      <param name="height_max" type="double" value="0.991" />
+      <param name="pitch_min"  type="double" value="-0.785" />
+      <param name="pitch_max"  type="double" value="-0.785" />
+      <param name="range_min"  type="double" value="0.4" />
+      <param name="range_max"  type="double" value="3.0" />
+      <param name="hfov"       type="double" value="1.01229097" />
+      <param name="vfov"       type="double" value="0.785398163" />
+      <param name="roll"       type="double" value="0.0" />
+      <!-- frames / topics -->
+      <param if="$(arg sim)" name="load_2dmap" type="bool" value="true" />
+      <remap if="$(arg sim)" from="/map" to="/only_walls/map" />
+      <param name="wall_height_2dmap" value="1.0" />
+      <param name="world_frame_id" type="string" value="/map" />
+      <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
+      <remap if="$(arg sim)" from="cloud_in" to="top_camera/depth/motion_filtered/throttled/points" />
+      <remap unless="$(arg sim)" from="cloud_in" to="top_camera/depth_registered/throttled/points" />
+    </node>
+  </group>
+</launch>
