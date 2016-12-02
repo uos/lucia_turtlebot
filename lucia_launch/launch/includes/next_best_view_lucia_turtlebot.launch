@@ -27,6 +27,17 @@
     <node     if="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth/motion_filtered/points            2 top_camera/depth/motion_filtered/throttled/points" />
     <node unless="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth_registered/motion_filtered/points 2 top_camera/depth_registered/throttled/points" />
 
+    <node name="multibot_cloud_filter" pkg="multibot_cloud_filter" type="multibot_cloud_filter" output="screen">
+      <remap     if="$(arg sim)" from="cloud_in" to="top_camera/depth/motion_filtered/throttled/points" />
+      <remap unless="$(arg sim)" from="cloud_in" to="top_camera/depth_registered/throttled/points" />
+      <remap from="cloud_out" to="/all_top_cameras" />
+      <param name="robot_radius" value="0.3" />
+      <rosparam param="other_robot_frames">
+        - "/turtlebot2_tf/base_footprint"
+        - "/turtlebot3_tf/base_footprint"
+      </rosparam>
+    </node>
+
     <node name="next_best_view_node" pkg="next_best_view_sampling" type="next_best_view_node" output="screen" respawn="true">
       <!-- camera constraints (top xtion on gazebo lucia turtlebot)-->
       <param name="height_min" type="double" value="0.991" />
@@ -44,8 +55,7 @@
       <param name="wall_height_2dmap" value="1.0" />
       <param name="world_frame_id" type="string" value="/map" />
       <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
-      <remap if="$(arg sim)" from="cloud_in" to="top_camera/depth/motion_filtered/throttled/points" />
-      <remap unless="$(arg sim)" from="cloud_in" to="top_camera/depth_registered/throttled/points" />
+      <remap if="$(arg sim)" from="cloud_in" to="/all_top_cameras" />
     </node>
   </group>
 
@@ -65,6 +75,17 @@
     <node     if="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth/motion_filtered/points            2 top_camera/depth/motion_filtered/throttled/points" />
     <node unless="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth_registered/motion_filtered/points 2 top_camera/depth_registered/throttled/points" />
 
+    <node name="multibot_cloud_filter" pkg="multibot_cloud_filter" type="multibot_cloud_filter" output="screen">
+      <remap     if="$(arg sim)" from="cloud_in" to="top_camera/depth/motion_filtered/throttled/points" />
+      <remap unless="$(arg sim)" from="cloud_in" to="top_camera/depth_registered/throttled/points" />
+      <remap from="cloud_out" to="/all_top_cameras" />
+      <param name="robot_radius" value="0.3" />
+      <rosparam param="other_robot_frames">
+        - "/turtlebot1_tf/base_footprint"
+        - "/turtlebot3_tf/base_footprint"
+      </rosparam>
+    </node>
+
     <node name="next_best_view_node" pkg="next_best_view_sampling" type="next_best_view_node" output="screen" respawn="true">
       <!-- camera constraints (top xtion on gazebo lucia turtlebot)-->
       <param name="height_min" type="double" value="0.991" />
@@ -82,8 +103,7 @@
       <param name="wall_height_2dmap" value="1.0" />
       <param name="world_frame_id" type="string" value="/map" />
       <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
-      <remap if="$(arg sim)" from="cloud_in" to="top_camera/depth/motion_filtered/throttled/points" />
-      <remap unless="$(arg sim)" from="cloud_in" to="top_camera/depth_registered/throttled/points" />
+      <remap if="$(arg sim)" from="cloud_in" to="/all_top_cameras" />
     </node>
   </group>
 
@@ -103,6 +123,17 @@
     <node     if="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth/motion_filtered/points            2 top_camera/depth/motion_filtered/throttled/points" />
     <node unless="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth_registered/motion_filtered/points 2 top_camera/depth_registered/throttled/points" />
 
+    <node name="multibot_cloud_filter" pkg="multibot_cloud_filter" type="multibot_cloud_filter" output="screen">
+      <remap     if="$(arg sim)" from="cloud_in" to="top_camera/depth/motion_filtered/throttled/points" />
+      <remap unless="$(arg sim)" from="cloud_in" to="top_camera/depth_registered/throttled/points" />
+      <remap from="cloud_out" to="/all_top_cameras" />
+      <param name="robot_radius" value="0.3" />
+      <rosparam param="other_robot_frames">
+        - "/turtlebot1_tf/base_footprint"
+        - "/turtlebot2_tf/base_footprint"
+      </rosparam>
+    </node>
+
     <node name="next_best_view_node" pkg="next_best_view_sampling" type="next_best_view_node" output="screen" respawn="true">
       <!-- camera constraints (top xtion on gazebo lucia turtlebot)-->
       <param name="height_min" type="double" value="0.991" />
@@ -120,8 +151,7 @@
       <param name="wall_height_2dmap" value="1.0" />
       <param name="world_frame_id" type="string" value="/map" />
       <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
-      <remap if="$(arg sim)" from="cloud_in" to="top_camera/depth/motion_filtered/throttled/points" />
-      <remap unless="$(arg sim)" from="cloud_in" to="top_camera/depth_registered/throttled/points" />
+      <remap if="$(arg sim)" from="cloud_in" to="/all_top_cameras" />
     </node>
   </group>
 </launch>

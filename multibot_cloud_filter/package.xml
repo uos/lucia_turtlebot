@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>multibot_cloud_filter</name>
+  <version>0.0.0</version>
+  <description>PointCloud2 filter that performs VoxelGrid filtering and removes the other robots from the input point cloud.</description>
+
+  <maintainer email="martin.guenther@dfki.de">Martin Guenther</maintainer>
+  <author email="martin.guenther@dfki.de">Martin Guenther</author>
+
+  <license>BSD</license>
+
+  <url type="website">https://github.com/uos/lucia_turtlebot</url>
+  <url type="repository">https://github.com/uos/lucia_turtlebot.git</url>
+  <url type="bugtracker">https://github.com/uos/lucia_turtlebot/issues</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>libpcl-all-dev</depend>
+  <depend>message_filters</depend>
+  <depend>pcl_ros</depend>
+  <depend>roscpp</depend>
+  <depend>tf</depend>
+</package>
