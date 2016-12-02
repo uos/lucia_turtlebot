@@ -28,7 +28,7 @@ wstool init -j4 . https://raw.githubusercontent.com/uos/uos_rosinstalls/master/l
 
 # Use rosdep to install all dependencies (including ROS itself)
 rosdep install --from-paths ./ -i -y --rosdistro indigo
-sudo apt-get install -qq -y ros-indigo-rviz
+sudo apt-get install -qq -y ros-indigo-rviz ros-indigo-rosbash
 
 source /opt/ros/indigo/setup.bash
 catkin_init_workspace
@@ -37,6 +37,8 @@ cd ~/catkin_ws
 catkin_make -DCMAKE_BUILD_TYPE=Release
 ```
 
+If you have `rosjava` installed, you may have to repeat the `catkin_make`
+command several times until it succeeds.
 The generated `setup.bash` file has to be sourced in each terminal that uses
 this catkin workspace. It's best to add it to the `.bashrc` so that it is
 sourced automatically whenever a new terminal is opened:
@@ -59,9 +61,13 @@ wstool merge https://raw.githubusercontent.com/uos/uos_rosinstalls/master/lucia2
 wstool up
 rosdep install --from-paths ./ -i -y --rosdistro indigo
 cd ~/catkin_ws
+source /opt/ros/indigo/setup.bash
 catkin_make -DCMAKE_BUILD_TYPE=Release
+source ~/catkin_ws/devel/setup.bash
 ```
 
+If you have `rosjava` installed, you may have to repeat the `catkin_make`
+command several times until it succeeds.
 
 Running in Gazebo
 -----------------
@@ -75,6 +81,19 @@ first turtlebot. If the robot moves to the goal position, you have everything
 set up correctly. You can command the other two turtlebots by opening "Panels"
 -> "Tool Properties" and changing the "2D Nav Goal" topic.
 
+You can disable specific turtlebots like this (for example, to speed up the
+Gazebo simulation):
+
+```bash
+roslaunch lucia_launch lucia_gazebo.launch turtlebot2:=false turtlebot3:=false
+```
+
+To start FLAP4CAOS active perception, run this:
+
+```bash
+ROS_NAMESPACE=turtlebot1 rosrun race_object_search object_search_manager_test p lucia_area_sw 0.4 lucia_area_nw 0.4 lucia_area_e 0.4 min_p_succ 0.05
+```
+
 
 Package overview
 ----------------
@@ -85,6 +104,11 @@ This ROS package contains all top-level launch files:
 
 - `lucia_gazebo.launch` - Brings up everything on 3 Turtlebots in Gazebo.
 - **TODO:** `lucia_robot.launch` - Same as above for physical robots.
+
+### lucia_turtlebot_description
+
+URDF model of the modified Turtlebots used in the Lucia school (i.e., regular
+Turtlebots with a pole and second Xtion added).
 
 ### lucia_gazebo_worlds
 
