@@ -8,9 +8,9 @@
 
   <license>BSD</license>
 
-  <url type="website">https://gitlab.informatik.uni-osnabrueck.de/lucia2016/lucia_turtlebot</url>
-  <url type="repository">https://gitlab.informatik.uni-osnabrueck.de/lucia2016/lucia_turtlebot.git</url>
-  <url type="bugtracker">https://gitlab.informatik.uni-osnabrueck.de/lucia2016/lucia_turtlebot/issues</url>
+  <url type="website">https://github.com/uos/lucia_turtlebot</url>
+  <url type="repository">https://github.com/uos/lucia_turtlebot.git</url>
+  <url type="bugtracker">https://github.com/uos/lucia_turtlebot/issues</url>
 
   <author email="martin.guenther@dfki.de">Martin Guenther</author>
 
