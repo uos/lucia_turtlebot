@@ -76,6 +76,9 @@
     </group>
 
     <node name="next_best_view_node" pkg="next_best_view_sampling" type="next_best_view_node" output="screen" respawn="true">
+      <!-- general parameters -->
+      <param name="resolution" value="0.10" />
+
       <!-- camera constraints (top xtion on gazebo lucia turtlebot)-->
       <param name="height_min" type="double" value="0.991" />
       <param name="height_max" type="double" value="0.991" />
@@ -170,6 +173,9 @@
     </group>
 
     <node name="next_best_view_node" pkg="next_best_view_sampling" type="next_best_view_node" output="screen" respawn="true">
+      <!-- general parameters -->
+      <param name="resolution" value="0.10" />
+
       <!-- camera constraints (top xtion on gazebo lucia turtlebot)-->
       <param name="height_min" type="double" value="0.991" />
       <param name="height_max" type="double" value="0.991" />
@@ -264,6 +270,9 @@
     </group>
 
     <node name="next_best_view_node" pkg="next_best_view_sampling" type="next_best_view_node" output="screen" respawn="true">
+      <!-- general parameters -->
+      <param name="resolution" value="0.10" />
+
       <!-- camera constraints (top xtion on gazebo lucia turtlebot)-->
       <param name="height_min" type="double" value="0.991" />
       <param name="height_max" type="double" value="0.991" />
