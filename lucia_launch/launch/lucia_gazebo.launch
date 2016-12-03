@@ -70,6 +70,15 @@
     <arg name="turtlebot3" value="$(arg turtlebot3)" />
   </include>
 
+  <!-- Next best view reachability filter -->
+  <include file="$(find lucia_launch)/launch/includes/nbv_reachability_filter.launch">
+    <arg name="sim" value="true" />
+
+    <arg name="turtlebot1" value="$(arg turtlebot1)" />
+    <arg name="turtlebot2" value="$(arg turtlebot2)" />
+    <arg name="turtlebot3" value="$(arg turtlebot3)" />
+  </include>
+
   <!-- Object search manager -->
   <include file="$(find lucia_launch)/launch/includes/object_search_manager.launch">
     <arg name="sim" value="true" />

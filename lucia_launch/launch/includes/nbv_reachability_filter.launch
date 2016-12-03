@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="sim" default="false" />
+
+  <arg name="turtlebot1" default="true" />
+  <arg name="turtlebot2" default="true" />
+  <arg name="turtlebot3" default="true" />
+
+  <!-- ################# turtlebot1 ############## -->
+  <group ns="turtlebot1" if="$(arg turtlebot1)">
+    <param name="tf_prefix" value="turtlebot1_tf" />
+
+    <node pkg="race_object_search" type="nbv_reachability_filter_node" name="nbv_reachability_filter_node" output="screen">
+      <!-- frame ids-->
+      <param name="world_frame_id" type="string" value="map" />   <!-- Do NOT use '/map' here (navfn_ros has a bug and tf-resolves the frame id twice)! -->
+      <param name="base_frame_id" type="string" value="base_footprint" />
+      <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
+
+      <!-- time needed for sensor data integration and object recognition -->
+      <param name="acquisition_time"   type="double" value="5.0" />
+
+      <!-- additional integration timeout to work around lag in simulated sensors -->
+      <param     if="$(arg sim)" name="additional_acquisition_time" type="double" value="5.0" />
+      <param unless="$(arg sim)" name="additional_acquisition_time" type="double" value="0.0" />
+    </node>
+  </group>
+
+  <!-- ################# turtlebot2 ############## -->
+  <group ns="turtlebot2" if="$(arg turtlebot2)">
+    <param name="tf_prefix" value="turtlebot2_tf" />
+
+    <node pkg="race_object_search" type="nbv_reachability_filter_node" name="nbv_reachability_filter_node" output="screen">
+      <!-- frame ids-->
+      <param name="world_frame_id" type="string" value="map" />   <!-- Do NOT use '/map' here (navfn_ros has a bug and tf-resolves the frame id twice)! -->
+      <param name="base_frame_id" type="string" value="base_footprint" />
+      <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
+
+      <!-- time needed for sensor data integration and object recognition -->
+      <param name="acquisition_time"   type="double" value="5.0" />
+
+      <!-- additional integration timeout to work around lag in simulated sensors -->
+      <param     if="$(arg sim)" name="additional_acquisition_time" type="double" value="5.0" />
+      <param unless="$(arg sim)" name="additional_acquisition_time" type="double" value="0.0" />
+    </node>
+  </group>
+
+  <!-- ################# turtlebot3 ############## -->
+  <group ns="turtlebot3" if="$(arg turtlebot3)">
+    <param name="tf_prefix" value="turtlebot3_tf" />
+
+    <node pkg="race_object_search" type="nbv_reachability_filter_node" name="nbv_reachability_filter_node" output="screen">
+      <!-- frame ids-->
+      <param name="world_frame_id" type="string" value="map" />   <!-- Do NOT use '/map' here (navfn_ros has a bug and tf-resolves the frame id twice)! -->
+      <param name="base_frame_id" type="string" value="base_footprint" />
+      <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
+
+      <!-- time needed for sensor data integration and object recognition -->
+      <param name="acquisition_time"   type="double" value="5.0" />
+
+      <!-- additional integration timeout to work around lag in simulated sensors -->
+      <param     if="$(arg sim)" name="additional_acquisition_time" type="double" value="5.0" />
+      <param unless="$(arg sim)" name="additional_acquisition_time" type="double" value="0.0" />
+    </node>
+  </group>
+</launch>
