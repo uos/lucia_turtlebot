@@ -106,31 +106,32 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "multibot_cloud_filter");
   ros::NodeHandle nh;
   ros::NodeHandle private_nh("~");
+  ros::Subscriber sub;
+  message_filters::Subscriber<PointCloudT> mf_sub;
+  tf::MessageFilter<PointCloudT> *tf_filter;
 
   voxel_size_ = private_nh.param("voxel_size", 0.05);
   robot_radius_ = private_nh.param("robot_radius", 0.2);
 
-  if (!private_nh.getParam("other_robot_frames", other_robot_frames_))
-  {
-    ROS_FATAL("Need to set parameter other_robot_frames!");
-    return 1;
-  }
-
-  std::string tf_prefix(tf::getPrefixParam(private_nh));
-  for (size_t j = 0; j < other_robot_frames_.size(); ++j)
-    other_robot_frames_[j] = tf::resolve(tf_prefix, other_robot_frames_[j]);
-
-  tf_ = new tf::TransformListener(nh, ros::Duration(3.0));
-
-  message_filters::Subscriber<PointCloudT> sub;
-  tf::MessageFilter<PointCloudT> *tf_filter;
-
   pub_ = nh.advertise<PointCloudT>("cloud_out", 10);
 
-  sub.subscribe(nh, "cloud_in", 10);
-  tf_filter = new tf::MessageFilter<PointCloudT>(sub, *tf_, "dummy_frame", 10);
-  tf_filter->setTargetFrames(other_robot_frames_);
-  tf_filter->registerCallback(boost::bind(callback, _1));
+  if (!private_nh.getParam("other_robot_frames", other_robot_frames_) || other_robot_frames_.empty())
+  {
+    sub = nh.subscribe("cloud_in", 10, callback);
+  }
+  else
+  {
+    std::string tf_prefix(tf::getPrefixParam(private_nh));
+    for (size_t j = 0; j < other_robot_frames_.size(); ++j)
+      other_robot_frames_[j] = tf::resolve(tf_prefix, other_robot_frames_[j]);
+
+    tf_ = new tf::TransformListener(nh, ros::Duration(3.0));
+
+    mf_sub.subscribe(nh, "cloud_in", 10);
+    tf_filter = new tf::MessageFilter<PointCloudT>(mf_sub, *tf_, "dummy_frame", 10);
+    tf_filter->setTargetFrames(other_robot_frames_);
+    tf_filter->registerCallback(boost::bind(callback, _1));
+  }
 
   ros::spin();
 
