@@ -1,0 +1,20 @@
+<package>
+  <name>lucia_turtlebot_bringup</name>
+  <version>1.0.0</version>
+  <description>
+    Launch + config files URDF to bring up the modified Turtlebots used in the
+    Lucia school (with second Xtion) on real hardware.
+  </description>
+
+  <maintainer email="martin.guenther@dfki.de">Martin Guenther</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">https://github.com/uos/lucia_turtlebot</url>
+  <url type="repository">https://github.com/uos/lucia_turtlebot.git</url>
+  <url type="bugtracker">https://github.com/uos/lucia_turtlebot/issues</url>
+
+  <author email="martin.guenther@dfki.de">Martin Guenther</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+</package>

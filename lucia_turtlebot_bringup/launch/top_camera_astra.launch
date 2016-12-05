@@ -1,0 +1,9 @@
+<launch>
+  <include file="$(find astra_launch)/launch/astra.launch">
+  <arg name="camera"                value="top_camera" />
+  <arg name="publish_tf"            value="false" />
+  <arg name="depth_registration"    value="true" />
+  <arg name="rgb_camera_info_url"   value="package://lucia_turtlebot_bringup/camera_info/rgb_16042610025.yaml" />
+  <arg name="depth_camera_info_url" value="package://lucia_turtlebot_bringup/camera_info/depth_16042610025.yaml" />
+</include>
+</launch>
