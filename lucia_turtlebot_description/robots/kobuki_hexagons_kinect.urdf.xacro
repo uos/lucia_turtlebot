@@ -20,7 +20,7 @@
     top_cam_or="0.0" top_cam_op="0.83" top_cam_oy="0.0" />
 
   <joint name="pole_xtion_joint" type="fixed">
-    <origin xyz="-0.055 -0.170 0.531"
+    <origin xyz="-0.1740 0.0 0.531"
       rpy="0 0 0"/>
     <parent link="base_link"/>
     <child link="pole_xtion_link" />
