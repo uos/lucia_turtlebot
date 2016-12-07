@@ -88,6 +88,13 @@
     <arg name="turtlebot3" value="$(arg turtlebot3)" />
   </include>
 
+  <!-- Lucia services -->
+  <include file="$(find lucia_launch)/launch/includes/lucia_services.launch">
+    <arg name="turtlebot1" value="$(arg turtlebot1)" />
+    <arg name="turtlebot2" value="$(arg turtlebot2)" />
+    <arg name="turtlebot3" value="$(arg turtlebot3)" />
+  </include>
+
   <!-- RViz -->
   <node pkg="rviz" type="rviz" name="rviz" output="screen"
     args="-d $(find multi_turtlebot_navigation)/rviz/robot_navigation.rviz" />
