@@ -1,0 +1,15 @@
+<launch>
+  <arg name="robot" />  <!-- "turtlebot1", "turtlebot2" or "turtlebot3" -->
+  <group ns="$(arg robot)">
+    <param name="tf_prefix" value="$(arg robot)_tf" />
+
+    <include file="$(find turtlebot_bringup)/launch/minimal.launch" />
+    <param name="mobile_base/base_frame" value="$(arg robot)_tf/base_footprint" />
+    <param name="mobile_base/odom_frame" value="$(arg robot)_tf/odom" />
+
+    <include file="$(find turtlebot_bringup)/launch/3dsensor.launch" />
+    <param name="depthimage_to_laserscan/output_frame_id" value="$(arg robot)_tf/camera_depth_frame" />
+    <param name="camera/driver/depth_frame_id" value="$(arg robot)_tf/camera_depth_optical_frame" />
+    <param name="camera/driver/rgb_frame_id" value="$(arg robot)_tf/camera_rgb_optical_frame" />
+  </group>
+</launch>
