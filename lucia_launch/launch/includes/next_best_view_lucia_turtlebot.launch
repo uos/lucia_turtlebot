@@ -7,13 +7,13 @@
   <arg name="turtlebot2" default="true" />
   <arg name="turtlebot3" default="true" />
 
-  <node if="$(arg sim)" name="map_server_only_walls" pkg="map_server" type="map_server" args="$(arg map_file_only_walls)" ns="/only_walls" output="screen">
-    <param name="frame_id" type="string" value="/map"/>
-  </node>
-
   <!-- ################# turtlebot1 ############## -->
   <group ns="turtlebot1" if="$(arg turtlebot1)">
     <param name="tf_prefix" value="turtlebot1_tf" />
+
+    <node if="$(arg sim)" name="map_server_only_walls" pkg="map_server" type="map_server" args="$(arg map_file_only_walls)" ns="only_walls" output="screen">
+      <param name="frame_id" type="string" value="/map"/>
+    </node>
 
     <node if="$(arg sim)" name="point_cloud_2_motion_filter" pkg="sensor_motion_filter" type="point_cloud_2_motion_filter" output="screen" respawn="true">
       <param name="static_frame" type="string" value="/map" />
@@ -64,7 +64,7 @@
 
       <!-- frames / topics -->
       <param if="$(arg sim)" name="load_2dmap" type="bool" value="true" />
-      <remap if="$(arg sim)" from="/map" to="/only_walls/map" />
+      <remap if="$(arg sim)" from="/map" to="only_walls/map" />
       <param name="wall_height_2dmap" value="1.0" />
       <param name="world_frame_id" type="string" value="/map" />
       <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
@@ -76,6 +76,10 @@
   <group ns="turtlebot2" if="$(arg turtlebot2)">
     <param name="tf_prefix" value="turtlebot2_tf" />
 
+    <node if="$(arg sim)" name="map_server_only_walls" pkg="map_server" type="map_server" args="$(arg map_file_only_walls)" ns="only_walls" output="screen">
+      <param name="frame_id" type="string" value="/map"/>
+    </node>
+
     <node if="$(arg sim)" name="point_cloud_2_motion_filter" pkg="sensor_motion_filter" type="point_cloud_2_motion_filter" output="screen" respawn="true">
       <param name="static_frame" type="string" value="/map" />
       <param name="block_time"   type="double" value="3.0" />
@@ -125,7 +129,7 @@
 
       <!-- frames / topics -->
       <param if="$(arg sim)" name="load_2dmap" type="bool" value="true" />
-      <remap if="$(arg sim)" from="/map" to="/only_walls/map" />
+      <remap if="$(arg sim)" from="/map" to="only_walls/map" />
       <param name="wall_height_2dmap" value="1.0" />
       <param name="world_frame_id" type="string" value="/map" />
       <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
@@ -137,6 +141,10 @@
   <group ns="turtlebot3" if="$(arg turtlebot3)">
     <param name="tf_prefix" value="turtlebot3_tf" />
 
+    <node if="$(arg sim)" name="map_server_only_walls" pkg="map_server" type="map_server" args="$(arg map_file_only_walls)" ns="only_walls" output="screen">
+      <param name="frame_id" type="string" value="/map"/>
+    </node>
+
     <node if="$(arg sim)" name="point_cloud_2_motion_filter" pkg="sensor_motion_filter" type="point_cloud_2_motion_filter" output="screen" respawn="true">
       <param name="static_frame" type="string" value="/map" />
       <param name="block_time"   type="double" value="3.0" />
@@ -186,7 +194,7 @@
 
       <!-- frames / topics -->
       <param if="$(arg sim)" name="load_2dmap" type="bool" value="true" />
-      <remap if="$(arg sim)" from="/map" to="/only_walls/map" />
+      <remap if="$(arg sim)" from="/map" to="only_walls/map" />
       <param name="wall_height_2dmap" value="1.0" />
       <param name="world_frame_id" type="string" value="/map" />
       <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
