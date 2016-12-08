@@ -1,4 +1,4 @@
 <?xml version="1.0"?>
 <launch>
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find lucia_turtlebot_description)/robots/kobuki_hexagons_kinect.urdf.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find lucia_turtlebot_description)/robots/turtlebot1.urdf.xacro'" />
 </launch>
