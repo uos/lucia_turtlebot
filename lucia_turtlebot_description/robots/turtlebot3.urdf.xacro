@@ -15,9 +15,11 @@
   <kobuki/>
   <stack_hexagons parent="base_link"/>
   <sensor_kinect  parent="base_link"/>
+
+  <!-- turtlebot3 -->
   <sensor_asus_xtion_pro  parent="base_link"
-    top_cam_px="${0.04}" top_cam_py="0.0205" top_cam_pz="1.02"
-    top_cam_or="0.0" top_cam_op="0.83" top_cam_oy="0.0" />
+    top_cam_px="0.06" top_cam_py="0.10" top_cam_pz="1.04"
+    top_cam_or="0.01" top_cam_op="0.82" top_cam_oy="-0.10" />
 
   <joint name="pole_xtion_joint" type="fixed">
     <origin xyz="-0.1740 0.0 0.531"
