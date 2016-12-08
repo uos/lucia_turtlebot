@@ -1,12 +1,22 @@
 <?xml version="1.0"?>
 <launch>
-  <node pkg="rqt_gui" type="rqt_gui" name="frame_editor" 
+  <arg name="turtlebot1" default="false" />
+  <arg name="turtlebot2" default="false" />
+  <arg name="turtlebot3" default="false" />
+
+  <node pkg="rqt_gui" type="rqt_gui" name="frame_editor"
     args="--standalone frame_editor --args --load '$(find lucia_turtlebot_bringup)/config/frames.yaml'"
     output="screen"/>
 
   <include file="$(find lucia_turtlebot_bringup)/launch/top_camera_xtion.launch">
     <arg name="publish_tf" value="true" />
+
+    <arg if="$(arg turtlebot1)" name="serial" default="1503160511" />
+    <arg if="$(arg turtlebot2)" name="serial" default="1205290078" />
+    <arg if="$(arg turtlebot3)" name="serial" default="1503140980" />
   </include>
+
+  <include file="$(find turtlebot_bringup)/launch/includes/3dsensor/kinect.launch.xml" />
 
   <include file="$(find lucia_turtlebot_description)/launch/upload_turtlebot.launch" />
 
@@ -15,6 +25,12 @@
   <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
     <param name="publish_frequency" type="double" value="30.0" />
   </node>
+
+  <node name="camera_throttle" pkg="topic_tools" type="throttle"
+    args="messages /camera/depth_registered/points 2 /camera/depth_registered/points/throttle" />
+
+  <node name="top_camera_throttle" pkg="topic_tools" type="throttle"
+    args="messages /top_camera/depth_registered/points 2 /top_camera/depth_registered/points/throttle" />
 
   <node pkg="rviz" type="rviz" name="rviz" args="-d $(find lucia_turtlebot_bringup)/rviz/frame_editor.rviz"/>
 </launch>
