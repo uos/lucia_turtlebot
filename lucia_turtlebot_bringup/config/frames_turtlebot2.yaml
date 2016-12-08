@@ -1,0 +1,7 @@
+frames:
+  top_camera_link:
+    orientation: {w: 0.9258175848456197, x: 0.0048839400934602446, y: 0.37574237199173477,
+      z: -0.040689268976134486}
+    parent: base_link
+    position: {x: -5.960464477539063e-08, y: 0.05, z: 0.98}
+    style: none

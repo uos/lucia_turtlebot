@@ -4,8 +4,12 @@
   <arg name="turtlebot2" default="false" />
   <arg name="turtlebot3" default="false" />
 
+  <arg if="$(arg turtlebot1)" name="turtlebot_name" value="turtlebot1" />
+  <arg if="$(arg turtlebot2)" name="turtlebot_name" value="turtlebot2" />
+  <arg if="$(arg turtlebot3)" name="turtlebot_name" value="turtlebot3" />
+
   <node pkg="rqt_gui" type="rqt_gui" name="frame_editor"
-    args="--standalone frame_editor --args --load '$(find lucia_turtlebot_bringup)/config/frames.yaml'"
+    args="--standalone frame_editor --args --load '$(find lucia_turtlebot_bringup)/config/frames_$(arg turtlebot_name).yaml'"
     output="screen"/>
 
   <include file="$(find lucia_turtlebot_bringup)/launch/top_camera_xtion.launch">
