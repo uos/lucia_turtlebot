@@ -34,8 +34,6 @@
 #include <ros/ros.h>
 
 #include <tf/transform_listener.h>
-#include <tf/message_filter.h>
-#include <message_filters/subscriber.h>
 
 #include <pcl_ros/point_cloud.h>
 #include <pcl_ros/transforms.h>
@@ -67,11 +65,27 @@ void callback(const PointCloudT::ConstPtr &cloud_in)
   for (size_t j = 0; j < other_robot_frames_.size(); ++j)
   {
     PointCloudT::Ptr cloud_transformed = boost::make_shared<PointCloudT>();
-    pcl_ros::transformPointCloud(other_robot_frames_[j], *cloud_vg, *cloud_transformed, *tf_);
-    cloud_transformed->header.stamp = cloud_vg->header.stamp;
-    cloud_transformed->header.frame_id = other_robot_frames_[j];
-    assert(cloud_vg->size() == cloud_transformed->size());
-    clouds_transformed.push_back(cloud_transformed);
+    try
+    {
+      if (!tf_->waitForTransform(other_robot_frames_[j],
+                                 cloud_vg->header.frame_id,
+                                 ros::Time().fromNSec(cloud_vg->header.stamp * 1000),
+                                 ros::Duration(3.0)))
+      {
+        return;
+      }
+      if (!pcl_ros::transformPointCloud(other_robot_frames_[j], *cloud_vg, *cloud_transformed, *tf_))
+        return;
+      cloud_transformed->header.stamp = cloud_vg->header.stamp;
+      cloud_transformed->header.frame_id = other_robot_frames_[j];
+      assert(cloud_vg->size() == cloud_transformed->size());
+      clouds_transformed.push_back(cloud_transformed);
+    }
+    catch (tf::TransformException ex)
+    {
+      ROS_ERROR("%s", ex.what());
+      return;
+    }
   }
 
   PointCloudT::Ptr cloud_out = boost::make_shared<PointCloudT>();
@@ -106,37 +120,49 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "multibot_cloud_filter");
   ros::NodeHandle nh;
   ros::NodeHandle private_nh("~");
-  ros::Subscriber sub;
-  message_filters::Subscriber<PointCloudT> mf_sub;
-  tf::MessageFilter<PointCloudT> *tf_filter;
 
   voxel_size_ = private_nh.param("voxel_size", 0.05);
   robot_radius_ = private_nh.param("robot_radius", 0.2);
 
   pub_ = nh.advertise<PointCloudT>("cloud_out", 10);
 
-  if (!private_nh.getParam("other_robot_frames", other_robot_frames_) || other_robot_frames_.empty())
-  {
-    sub = nh.subscribe("cloud_in", 10, callback);
-  }
-  else
-  {
-    std::string tf_prefix(tf::getPrefixParam(private_nh));
-    for (size_t j = 0; j < other_robot_frames_.size(); ++j)
-      other_robot_frames_[j] = tf::resolve(tf_prefix, other_robot_frames_[j]);
+  tf_ = new tf::TransformListener(nh, ros::Duration(3.0));
+  ros::Duration(3.0).sleep();   // allow TF buffer to fill up
 
-    tf_ = new tf::TransformListener(nh, ros::Duration(3.0));
+  std::string map_frame;
+  private_nh.param<std::string>("map_frame", map_frame, "/map");
 
-    mf_sub.subscribe(nh, "cloud_in", 10);
-    tf_filter = new tf::MessageFilter<PointCloudT>(mf_sub, *tf_, "dummy_frame", 10);
-    tf_filter->setTargetFrames(other_robot_frames_);
-    tf_filter->registerCallback(boost::bind(callback, _1));
+  std::vector<std::string> tmp_other_robot_frames;
+  private_nh.getParam("other_robot_frames", tmp_other_robot_frames);
+  std::string tf_prefix(tf::getPrefixParam(private_nh));
+  for (size_t j = 0; j < tmp_other_robot_frames.size(); ++j)
+  {
+    tmp_other_robot_frames[j] = tf::resolve(tf_prefix, tmp_other_robot_frames[j]);
+    try
+    {
+      if (!tf_->waitForTransform(tmp_other_robot_frames[j],
+                                 map_frame,
+                                 ros::Time(),
+                                 ros::Duration(3.0)))
+      {
+        ROS_WARN("Warning: skipping other robot frame %s", tmp_other_robot_frames[j].c_str());
+      }
+      else
+      {
+        other_robot_frames_.push_back(tmp_other_robot_frames[j]);
+      }
+    }
+    catch (tf::TransformException ex)
+    {
+      ROS_ERROR("%s", ex.what());
+      ROS_WARN("Warning: skipping other robot frame %s", tmp_other_robot_frames[j].c_str());
+    }
   }
+
+  ros::Subscriber sub(nh.subscribe("cloud_in", 10, callback));
 
   ros::spin();
 
-  delete tf_filter;
   delete tf_;
-
   return 0;
 }
