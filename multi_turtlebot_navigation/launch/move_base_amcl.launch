@@ -17,12 +17,12 @@
   <arg name="t3_initial_pose_y" default="4.1"/>
   <arg name="t3_initial_pose_a" default="0.0"/>
 
-  <!-- Map server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
-
   <!-- ################# turtlebot1 ############## -->
   <group ns="turtlebot1" if="$(arg turtlebot1)">
     <param name="tf_prefix" value="turtlebot1_tf" />
+
+    <!-- Map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
     <!-- Localization -->
     <include file="$(find multi_turtlebot_navigation)/launch/includes/amcl.launch.xml">
@@ -35,7 +35,6 @@
     </include>
 
     <!-- Move base -->
-    <remap from="map" to="/map" />
     <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
       <arg name="global_frame_id" value="/map" />
     </include>
@@ -44,6 +43,9 @@
   <!-- ################# turtlebot2 ############## -->
   <group ns="turtlebot2" if="$(arg turtlebot2)">
     <param name="tf_prefix" value="turtlebot2_tf" />
+
+    <!-- Map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
     <!-- Localization -->
     <include file="$(find multi_turtlebot_navigation)/launch/includes/amcl.launch.xml">
@@ -56,7 +58,6 @@
     </include>
 
     <!-- Move base -->
-    <remap from="map" to="/map" />
     <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
       <arg name="global_frame_id" value="/map" />
     </include>
@@ -65,6 +66,9 @@
   <!-- ################# turtlebot3 ############## -->
   <group ns="turtlebot3" if="$(arg turtlebot3)">
     <param name="tf_prefix" value="turtlebot3_tf" />
+
+    <!-- Map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
     <!-- Localization -->
     <include file="$(find multi_turtlebot_navigation)/launch/includes/amcl.launch.xml">
@@ -77,7 +81,6 @@
     </include>
 
     <!-- Move base -->
-    <remap from="map" to="/map" />
     <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml">
       <arg name="global_frame_id" value="/map" />
     </include>
