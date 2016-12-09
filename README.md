@@ -8,7 +8,7 @@ real robots.
 Installation
 ------------
 
-Install prerequisites:
+Install ROS prerequisites:
 
 ```bash
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
@@ -19,7 +19,37 @@ sudo rosdep init
 rosdep update
 ```
 
-Create a Catkin work space, clone and build our ROS stack:
+Install the [Las Vegas Reconstruction toolkit](https://github.com/lasvegasrc/Las-Vegas-Reconstruction/):
+
+```bash
+sudo apt-get install -qq -y libfreenect-dev libopencv-dev libflann-dev libeigen3-dev libvtk5-dev libvtk5.8-qt4 python-vtk libvtk-java libboost-all-dev freeglut3-dev libxmu-dev libusb-1.0.0-dev
+mkdir -p ~/lucia_software
+cd ~/lucia_software
+git clone https://github.com/lasvegasrc/Las-Vegas-Reconstruction.git
+mkdir -p Las-Vegas-Reconstruction/build
+cd Las-Vegas-Reconstruction/build
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make
+sudo make install
+```
+
+Install the 3D Toolkit [3DTK](http://slam6d.sourceforge.net/):
+
+```bash
+sudo apt-get install -qq -y libzip-dev libann-dev libsuitesparse-dev libnewmat10-dev subversion
+cd ~/lucia_software
+svn checkout svn://svn.code.sf.net/p/slam6d/code/trunk slam6d-code
+mkdir -p slam6d-code/build
+cd slam6d-code/build
+rm ../3rdparty/CMakeModules/FindCUDA.cmake
+cmake -DWITH_FBR=ON ..
+cmake -DWITH_FBR=ON ..
+make
+```
+
+Be sure to make the cmake -DWITH_FBR ... call twice to get the software compiled.
+
+Create a Catkin workspace, clone and build our ROS stacks:
 
 ```bash
 mkdir -p ~/catkin_ws/src
