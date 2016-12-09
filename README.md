@@ -27,6 +27,7 @@ cd ~/catkin_ws/src
 wstool init -j4 . https://raw.githubusercontent.com/uos/uos_rosinstalls/master/lucia2016-indigo.rosinstall
 
 # Use rosdep to install all dependencies (including ROS itself)
+sudo apt-get install -qq -y linux-image-extra-$(uname -r)  # workaround for ros-indigo-realsense-camera
 rosdep install --from-paths ./ -i -y --rosdistro indigo
 sudo apt-get install -qq -y ros-indigo-rviz ros-indigo-rosbash
 

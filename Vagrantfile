@@ -48,23 +48,25 @@ Vagrant.configure(2) do |config|
     sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
     wget http://packages.ros.org/ros.key -O - | sudo apt-key add -
     sudo apt-get update -qq
-    sudo apt-get install -qq -y python-rosdep ros-$CI_ROS_DISTRO-catkin git build-essential cmake
+    sudo apt-get install -qq -y python-rosdep python-wstool ros-$CI_ROS_DISTRO-catkin git build-essential cmake
     sudo rosdep init
     rosdep update
     
     mkdir -p $CATKIN_WS_SRC
     cd $CATKIN_WS_SRC/
-    catkin_init_workspace
     ln -s /vagrant/ $CATKIN_WS_SRC/lucia_turtlebot
-    cd lucia_turtlebot
+    wstool init -j4 . https://raw.githubusercontent.com/uos/uos_rosinstalls/master/lucia2016-indigo.rosinstall
     
     # Use rosdep to install all dependencies (including ROS itself)
+    sudo apt-get install -qq -y linux-image-extra-$(uname -r)  # workaround for ros-indigo-realsense-camera
     rosdep install --from-paths ./ -i -y --rosdistro $CI_ROS_DISTRO
 
     source /opt/ros/$CI_ROS_DISTRO/setup.bash
+    catkin_init_workspace
     cd $CATKIN_WS
 
-    catkin_make -DCMAKE_BUILD_TYPE=Release install
+    # Run catkin_make up to three times: when rosjava is installed, it sometimes fails on the first try
+    catkin_make -DCMAKE_BUILD_TYPE=Release || catkin_make -DCMAKE_BUILD_TYPE=Release || catkin_make -DCMAKE_BUILD_TYPE=Release
 
     echo 'export LC_ALL="en_US.UTF-8"' >> ~/.bashrc
     echo 'source ~/catkin_ws/devel/setup.bash' >> ~/.bashrc
