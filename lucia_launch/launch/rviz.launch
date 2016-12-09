@@ -1,0 +1,5 @@
+<launch>
+  <!-- RViz -->
+  <node pkg="rviz" type="rviz" name="rviz" output="screen"
+    args="-d $(find multi_turtlebot_navigation)/rviz/robot_navigation.rviz" />
+</launch>
