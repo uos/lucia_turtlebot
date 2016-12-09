@@ -12,12 +12,14 @@
   <group ns="$(arg robot)">
     <!-- Top camera -->
     <include file="$(find lucia_turtlebot_bringup)/launch/top_camera_xtion.launch">
-      <arg name="publish_tf" value="true" />
+      <arg name="publish_tf" value="false" />
 
       <arg if="$(arg turtlebot1)" name="serial" default="1503160511" />
       <arg if="$(arg turtlebot2)" name="serial" default="1205290078" />
       <arg if="$(arg turtlebot3)" name="serial" default="1503140980" />
     </include>
+    <param name="top_camera/driver/depth_frame_id" value="$(arg robot)_tf/top_camera_depth_optical_frame" />
+    <param name="top_camera/driver/rgb_frame_id" value="$(arg robot)_tf/top_camera_rgb_optical_frame" />
 
     <!-- Processing -->
     <include file="$(find lucia_launch)/launch/processing.launch">

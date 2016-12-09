@@ -17,7 +17,7 @@
   </node>
 
   <node     if="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth/motion_filtered/points            2 top_camera/depth/motion_filtered/throttled/points" />
-  <node unless="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth_registered/motion_filtered/points 2 top_camera/depth_registered/throttled/points" />
+  <node unless="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth_registered/points 2 top_camera/depth_registered/throttled/points" />
 
   <node name="multibot_cloud_filter" pkg="multibot_cloud_filter" type="multibot_cloud_filter" output="screen">
     <remap     if="$(arg sim)" from="cloud_in" to="top_camera/depth/motion_filtered/throttled/points" />
@@ -55,11 +55,11 @@
     </rosparam>
 
     <!-- frames / topics -->
-    <param if="$(arg sim)" name="load_2dmap" type="bool" value="true" />
-    <remap if="$(arg sim)" from="/map" to="only_walls/map" />
+    <param name="load_2dmap" type="bool" value="true" />
+    <remap from="/map" to="only_walls/map" />
     <param name="wall_height_2dmap" value="1.0" />
     <param name="world_frame_id" type="string" value="/map" />
     <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
-    <remap if="$(arg sim)" from="cloud_in" to="/all_top_cameras" />
+    <remap from="cloud_in" to="/all_top_cameras" />
   </node>
 </launch>
