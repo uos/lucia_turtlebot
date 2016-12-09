@@ -1,157 +1,51 @@
 <?xml version="1.0" ?>
 <launch>
-  <arg name="turtlebot1" default="true" />
-  <arg name="turtlebot2" default="true" />
-  <arg name="turtlebot3" default="true" />
-
   <arg name="log_dir" default="" />
-  <arg name="sim" default="true" />
-  <arg name="robot" default="turtlebot" />
+  <arg name="sim" default="false" />
+  <arg name="agent_type" default="turtlebot" />
 
-  <!-- ################# turtlebot1 ############## -->
-  <group ns="turtlebot1" if="$(arg turtlebot1)">
-    <param name="tf_prefix" value="turtlebot1_tf" />
-    <node name="object_search_manager" pkg="race_object_search" type="object_search_manager" output="screen" respawn="true">
-      <!-- frame ids-->
-      <param name="world_frame_id" type="string" value="map" />   <!-- Do NOT use '/map' here (navfn_ros has a bug and tf-resolves the frame id twice)! -->
-      <param name="base_frame_id" type="string" value="base_footprint" />
-      <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
+  <node name="object_search_manager" pkg="race_object_search" type="object_search_manager" output="screen" respawn="true">
+    <!-- frame ids-->
+    <param name="world_frame_id" type="string" value="map" />   <!-- Do NOT use '/map' here (navfn_ros has a bug and tf-resolves the frame id twice)! -->
+    <param name="base_frame_id" type="string" value="base_footprint" />
+    <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
 
-      <!-- time needed for sensor data integration and object recognition -->
-      <param name="acquisition_time"   type="double" value="5.0" />
+    <!-- time needed for sensor data integration and object recognition -->
+    <param name="acquisition_time"   type="double" value="5.0" />
 
-      <!-- additional integration timeout to work around lag in simulated sensors -->
-      <param     if="$(arg sim)" name="additional_acquisition_time" type="double" value="5.0" />
-      <param unless="$(arg sim)" name="additional_acquisition_time" type="double" value="0.0" />
+    <!-- additional integration timeout to work around lag in simulated sensors -->
+    <param     if="$(arg sim)" name="additional_acquisition_time" type="double" value="5.0" />
+    <param unless="$(arg sim)" name="additional_acquisition_time" type="double" value="0.0" />
 
-      <!-- name of the robot agent to use -->
-      <param name="robot" type="string" value="$(arg robot)" />
+    <!-- name of the robot agent to use -->
+    <param name="robot" type="string" value="$(arg agent_type)" />
 
-      <!-- directory to place log outout -->
-      <param name="log_dir" type="string" value="$(arg log_dir)" />
+    <!-- directory to place log outout -->
+    <param name="log_dir" type="string" value="$(arg log_dir)" />
 
-      <!-- set planning mode. available: search, iw, id -->
-      <param name="planning_mode" type="string" value="search" />
+    <!-- set planning mode. available: search, iw, id -->
+    <param name="planning_mode" type="string" value="search" />
 
-      <!-- maximum depth to allow branching -->
-      <param name="depth_limit" type="int" value="2" />
+    <!-- maximum depth to allow branching -->
+    <param name="depth_limit" type="int" value="2" />
 
-      <!-- portion of search progress upon which a plan is regarded as complete -->
-      <param name="relative_lookahead" type="double" value="1.0" />
+    <!-- portion of search progress upon which a plan is regarded as complete -->
+    <param name="relative_lookahead" type="double" value="1.0" />
 
-      <!-- relative utility limit for branching -->
-      <param name="max_rel_branch_cost" type="double" value="1.3" />
+    <!-- relative utility limit for branching -->
+    <param name="max_rel_branch_cost" type="double" value="1.3" />
 
-      <!-- hard planning timeout -->
-      <param name="planning_timeout" type="double" value="15" />
+    <!-- hard planning timeout -->
+    <param name="planning_timeout" type="double" value="15" />
 
-      <!-- number of local and global sensor pose samples -->
-      <param name="local_sample_size" type="int" value="0" />
-      <param name="global_sample_size" type="int" value="200" />
+    <!-- number of local and global sensor pose samples -->
+    <param name="local_sample_size" type="int" value="0" />
+    <param name="global_sample_size" type="int" value="200" />
 
-      <!-- toggle domination pruning heuristic on/off -->
-      <param name="use_domination" type="boolean" value="false" />
+    <!-- toggle domination pruning heuristic on/off -->
+    <param name="use_domination" type="boolean" value="false" />
 
-      <!-- ratio of ray casts to skip in NBV calculation (speeds up information gain estimation) -->
-      <param name="ray_skip" type="double" value="0.8" />
-    </node>
-  </group>
-
-  <!-- ################# turtlebot2 ############## -->
-  <group ns="turtlebot2" if="$(arg turtlebot2)">
-    <param name="tf_prefix" value="turtlebot2_tf" />
-    <node name="object_search_manager" pkg="race_object_search" type="object_search_manager" output="screen" respawn="true">
-      <!-- frame ids-->
-      <param name="world_frame_id" type="string" value="map" />   <!-- Do NOT use '/map' here (navfn_ros has a bug and tf-resolves the frame id twice)! -->
-      <param name="base_frame_id" type="string" value="base_footprint" />
-      <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
-
-      <!-- time needed for sensor data integration and object recognition -->
-      <param name="acquisition_time"   type="double" value="5.0" />
-
-      <!-- additional integration timeout to work around lag in simulated sensors -->
-      <param     if="$(arg sim)" name="additional_acquisition_time" type="double" value="5.0" />
-      <param unless="$(arg sim)" name="additional_acquisition_time" type="double" value="0.0" />
-
-      <!-- name of the robot agent to use -->
-      <param name="robot" type="string" value="$(arg robot)" />
-
-      <!-- directory to place log outout -->
-      <param name="log_dir" type="string" value="$(arg log_dir)" />
-
-      <!-- set planning mode. available: search, iw, id -->
-      <param name="planning_mode" type="string" value="search" />
-
-      <!-- maximum depth to allow branching -->
-      <param name="depth_limit" type="int" value="2" />
-
-      <!-- portion of search progress upon which a plan is regarded as complete -->
-      <param name="relative_lookahead" type="double" value="1.0" />
-
-      <!-- relative utility limit for branching -->
-      <param name="max_rel_branch_cost" type="double" value="1.3" />
-
-      <!-- hard planning timeout -->
-      <param name="planning_timeout" type="double" value="15" />
-
-      <!-- number of local and global sensor pose samples -->
-      <param name="local_sample_size" type="int" value="0" />
-      <param name="global_sample_size" type="int" value="200" />
-
-      <!-- toggle domination pruning heuristic on/off -->
-      <param name="use_domination" type="boolean" value="false" />
-
-      <!-- ratio of ray casts to skip in NBV calculation (speeds up information gain estimation) -->
-      <param name="ray_skip" type="double" value="0.8" />
-    </node>
-  </group>
-
-  <!-- ################# turtlebot3 ############## -->
-  <group ns="turtlebot3" if="$(arg turtlebot3)">
-    <param name="tf_prefix" value="turtlebot3_tf" />
-    <node name="object_search_manager" pkg="race_object_search" type="object_search_manager" output="screen" respawn="true">
-      <!-- frame ids-->
-      <param name="world_frame_id" type="string" value="map" />   <!-- Do NOT use '/map' here (navfn_ros has a bug and tf-resolves the frame id twice)! -->
-      <param name="base_frame_id" type="string" value="base_footprint" />
-      <param name="camera_frame_id" type="string" value="top_camera_depth_frame" />
-
-      <!-- time needed for sensor data integration and object recognition -->
-      <param name="acquisition_time"   type="double" value="5.0" />
-
-      <!-- additional integration timeout to work around lag in simulated sensors -->
-      <param     if="$(arg sim)" name="additional_acquisition_time" type="double" value="5.0" />
-      <param unless="$(arg sim)" name="additional_acquisition_time" type="double" value="0.0" />
-
-      <!-- name of the robot agent to use -->
-      <param name="robot" type="string" value="$(arg robot)" />
-
-      <!-- directory to place log outout -->
-      <param name="log_dir" type="string" value="$(arg log_dir)" />
-
-      <!-- set planning mode. available: search, iw, id -->
-      <param name="planning_mode" type="string" value="search" />
-
-      <!-- maximum depth to allow branching -->
-      <param name="depth_limit" type="int" value="2" />
-
-      <!-- portion of search progress upon which a plan is regarded as complete -->
-      <param name="relative_lookahead" type="double" value="1.0" />
-
-      <!-- relative utility limit for branching -->
-      <param name="max_rel_branch_cost" type="double" value="1.3" />
-
-      <!-- hard planning timeout -->
-      <param name="planning_timeout" type="double" value="15" />
-
-      <!-- number of local and global sensor pose samples -->
-      <param name="local_sample_size" type="int" value="0" />
-      <param name="global_sample_size" type="int" value="200" />
-
-      <!-- toggle domination pruning heuristic on/off -->
-      <param name="use_domination" type="boolean" value="false" />
-
-      <!-- ratio of ray casts to skip in NBV calculation (speeds up information gain estimation) -->
-      <param name="ray_skip" type="double" value="0.8" />
-    </node>
-  </group>
+    <!-- ratio of ray casts to skip in NBV calculation (speeds up information gain estimation) -->
+    <param name="ray_skip" type="double" value="0.8" />
+  </node>
 </launch>

@@ -1,0 +1,20 @@
+<launch>
+  <arg name="sim" default="false" />
+  <arg name="map_file_only_walls" default="$(find lucia_gazebo_worlds)/maps/lucia_arena_only_walls.yaml"/>
+
+  <!-- Next best view -->
+  <include file="$(find lucia_launch)/launch/includes/next_best_view_lucia_turtlebot.launch">
+    <arg name="sim" value="$(arg sim)" />
+    <arg name="map_file_only_walls" value="$(arg map_file_only_walls)" />
+  </include>
+
+  <!-- Next best view reachability filter -->
+  <include file="$(find lucia_launch)/launch/includes/nbv_reachability_filter.launch">
+    <arg name="sim" value="$(arg sim)" />
+  </include>
+
+  <!-- Object search manager -->
+  <include file="$(find lucia_launch)/launch/includes/object_search_manager.launch">
+    <arg name="sim" value="$(arg sim)" />
+  </include>
+</launch>

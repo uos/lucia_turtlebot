@@ -52,6 +52,12 @@
       <arg name="initial_pose_y" value="$(arg t1_initial_pose_y)" />
       <arg name="initial_pose_a" value="$(arg t1_initial_pose_a)" />
     </include>
+
+    <!-- Processing -->
+    <include file="$(find lucia_launch)/launch/processing.launch">
+      <arg name="sim" value="true" />
+      <arg name="map_file_only_walls" value="$(arg map_file_only_walls)" />
+    </include>
   </group>
 
   <!-- ################# turtlebot2 ############## -->
@@ -66,6 +72,12 @@
       <arg name="initial_pose_x" value="$(arg t2_initial_pose_x)" />
       <arg name="initial_pose_y" value="$(arg t2_initial_pose_y)" />
       <arg name="initial_pose_a" value="$(arg t2_initial_pose_a)" />
+    </include>
+
+    <!-- Processing -->
+    <include file="$(find lucia_launch)/launch/processing.launch">
+      <arg name="sim" value="true" />
+      <arg name="map_file_only_walls" value="$(arg map_file_only_walls)" />
     </include>
   </group>
 
@@ -82,35 +94,13 @@
       <arg name="initial_pose_y" value="$(arg t3_initial_pose_y)" />
       <arg name="initial_pose_a" value="$(arg t3_initial_pose_a)" />
     </include>
+
+    <!-- Processing -->
+    <include file="$(find lucia_launch)/launch/processing.launch">
+      <arg name="sim" value="true" />
+      <arg name="map_file_only_walls" value="$(arg map_file_only_walls)" />
+    </include>
   </group>
-
-  <!-- Next best view -->
-  <include file="$(find lucia_launch)/launch/includes/next_best_view_lucia_turtlebot.launch">
-    <arg name="sim" value="true" />
-    <arg name="map_file_only_walls" value="$(arg map_file_only_walls)" />
-
-    <arg name="turtlebot1" value="$(arg turtlebot1)" />
-    <arg name="turtlebot2" value="$(arg turtlebot2)" />
-    <arg name="turtlebot3" value="$(arg turtlebot3)" />
-  </include>
-
-  <!-- Next best view reachability filter -->
-  <include file="$(find lucia_launch)/launch/includes/nbv_reachability_filter.launch">
-    <arg name="sim" value="true" />
-
-    <arg name="turtlebot1" value="$(arg turtlebot1)" />
-    <arg name="turtlebot2" value="$(arg turtlebot2)" />
-    <arg name="turtlebot3" value="$(arg turtlebot3)" />
-  </include>
-
-  <!-- Object search manager -->
-  <include file="$(find lucia_launch)/launch/includes/object_search_manager.launch">
-    <arg name="sim" value="true" />
-
-    <arg name="turtlebot1" value="$(arg turtlebot1)" />
-    <arg name="turtlebot2" value="$(arg turtlebot2)" />
-    <arg name="turtlebot3" value="$(arg turtlebot3)" />
-  </include>
 
   <include file="$(find lucia_launch)/launch/rviz.launch" />
 </launch>
