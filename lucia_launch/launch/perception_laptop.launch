@@ -1,0 +1,28 @@
+<launch>
+  <arg name="turtlebot1" default="false" />
+  <arg name="turtlebot2" default="false" />
+  <arg name="turtlebot3" default="false" />
+
+  <arg if="$(arg turtlebot1)" name="robot" value="turtlebot1" />
+  <arg if="$(arg turtlebot2)" name="robot" value="turtlebot2" />
+  <arg if="$(arg turtlebot3)" name="robot" value="turtlebot3" />
+
+  <arg name="map_file_only_walls" default="$(find lucia_gazebo_worlds)/maps/lucia_arena_only_walls.yaml"/>
+
+  <group ns="$(arg robot)">
+    <!-- Top camera -->
+    <include file="$(find lucia_turtlebot_bringup)/launch/top_camera_xtion.launch">
+      <arg name="publish_tf" value="true" />
+
+      <arg if="$(arg turtlebot1)" name="serial" default="1503160511" />
+      <arg if="$(arg turtlebot2)" name="serial" default="1205290078" />
+      <arg if="$(arg turtlebot3)" name="serial" default="1503140980" />
+    </include>
+
+    <!-- Processing -->
+    <include file="$(find lucia_launch)/launch/processing.launch">
+      <arg name="sim" value="false" />
+      <arg name="map_file_only_walls" value="$(arg map_file_only_walls)" />
+    </include>
+  </group>
+</launch>

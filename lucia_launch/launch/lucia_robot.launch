@@ -1,5 +1,11 @@
 <launch>
   <arg name="robot" />  <!-- "turtlebot1", "turtlebot2" or "turtlebot3" -->
+  <arg name="map_file" default="$(find lucia_gazebo_worlds)/maps/lucia_arena.yaml"/>
+
+  <arg name="initial_pose_x" default="0.0"/>
+  <arg name="initial_pose_y" default="0.0"/>
+  <arg name="initial_pose_a" default="0.0"/>
+
   <group ns="$(arg robot)">
     <param name="tf_prefix" value="$(arg robot)_tf" />
 
@@ -11,5 +17,17 @@
     <param name="depthimage_to_laserscan/output_frame_id" value="$(arg robot)_tf/camera_depth_frame" />
     <param name="camera/driver/depth_frame_id" value="$(arg robot)_tf/camera_depth_optical_frame" />
     <param name="camera/driver/rgb_frame_id" value="$(arg robot)_tf/camera_rgb_optical_frame" />
+
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find lucia_turtlebot_description)/robots/$(arg robot).urdf.xacro'" />
+
+    <!-- Navigation -->
+    <include file="$(find multi_turtlebot_navigation)/launch/move_base_amcl.launch">
+      <arg name="robot" value="$(arg robot)" />
+      <arg name="map_file" value="$(arg map_file)" />
+
+      <arg name="initial_pose_x" value="$(arg initial_pose_x)" />
+      <arg name="initial_pose_y" value="$(arg initial_pose_y)" />
+      <arg name="initial_pose_a" value="$(arg initial_pose_a)" />
+    </include>
   </group>
 </launch>

@@ -4,12 +4,12 @@
   <arg name="turtlebot2" default="false" />
   <arg name="turtlebot3" default="false" />
 
-  <arg if="$(arg turtlebot1)" name="turtlebot_name" value="turtlebot1" />
-  <arg if="$(arg turtlebot2)" name="turtlebot_name" value="turtlebot2" />
-  <arg if="$(arg turtlebot3)" name="turtlebot_name" value="turtlebot3" />
+  <arg if="$(arg turtlebot1)" name="robot" value="turtlebot1" />
+  <arg if="$(arg turtlebot2)" name="robot" value="turtlebot2" />
+  <arg if="$(arg turtlebot3)" name="robot" value="turtlebot3" />
 
   <node pkg="rqt_gui" type="rqt_gui" name="frame_editor"
-    args="--standalone frame_editor --args --load '$(find lucia_turtlebot_bringup)/config/frames_$(arg turtlebot_name).yaml'"
+    args="--standalone frame_editor --args --load '$(find lucia_turtlebot_bringup)/config/frames_$(arg robot).yaml'"
     output="screen"/>
 
   <include file="$(find lucia_turtlebot_bringup)/launch/top_camera_xtion.launch">
@@ -22,7 +22,7 @@
 
   <include file="$(find turtlebot_bringup)/launch/includes/3dsensor/kinect.launch.xml" />
 
-  <param name="robot_description" command="$(find xacro)/xacro.py '$(find lucia_turtlebot_description)/robots/$(arg turtlebot_name).urdf.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro.py '$(find lucia_turtlebot_description)/robots/$(arg robot).urdf.xacro'" />
 
   <param name="use_gui" value="False"/>
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" ></node>
