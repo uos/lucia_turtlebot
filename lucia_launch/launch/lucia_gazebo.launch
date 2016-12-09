@@ -39,26 +39,50 @@
     <arg name="t3_initial_pose_a" value="$(arg t3_initial_pose_a)" />
   </include>
 
-  <!-- Navigation -->
-  <include file="$(find multi_turtlebot_navigation)/launch/move_base_amcl.launch">
-    <arg name="map_file" value="$(arg map_file)" />
+  <!-- ################# turtlebot1 ############## -->
+  <group ns="turtlebot1" if="$(arg turtlebot1)">
+    <param name="tf_prefix" value="turtlebot1_tf" />
 
-    <arg name="turtlebot1" value="$(arg turtlebot1)" />
-    <arg name="turtlebot2" value="$(arg turtlebot2)" />
-    <arg name="turtlebot3" value="$(arg turtlebot3)" />
+    <!-- Navigation -->
+    <include file="$(find multi_turtlebot_navigation)/launch/move_base_amcl.launch">
+      <arg name="robot" value="turtlebot1" />
+      <arg name="map_file" value="$(arg map_file)" />
 
-    <arg name="t1_initial_pose_x" value="$(arg t1_initial_pose_x)" />
-    <arg name="t1_initial_pose_y" value="$(arg t1_initial_pose_y)" />
-    <arg name="t1_initial_pose_a" value="$(arg t1_initial_pose_a)" />
+      <arg name="initial_pose_x" value="$(arg t1_initial_pose_x)" />
+      <arg name="initial_pose_y" value="$(arg t1_initial_pose_y)" />
+      <arg name="initial_pose_a" value="$(arg t1_initial_pose_a)" />
+    </include>
+  </group>
 
-    <arg name="t2_initial_pose_x" value="$(arg t2_initial_pose_x)" />
-    <arg name="t2_initial_pose_y" value="$(arg t2_initial_pose_y)" />
-    <arg name="t2_initial_pose_a" value="$(arg t2_initial_pose_a)" />
+  <!-- ################# turtlebot2 ############## -->
+  <group ns="turtlebot2" if="$(arg turtlebot2)">
+    <param name="tf_prefix" value="turtlebot2_tf" />
 
-    <arg name="t3_initial_pose_x" value="$(arg t3_initial_pose_x)" />
-    <arg name="t3_initial_pose_y" value="$(arg t3_initial_pose_y)" />
-    <arg name="t3_initial_pose_a" value="$(arg t3_initial_pose_a)" />
-  </include>
+    <!-- Navigation -->
+    <include file="$(find multi_turtlebot_navigation)/launch/move_base_amcl.launch">
+      <arg name="robot" value="turtlebot2" />
+      <arg name="map_file" value="$(arg map_file)" />
+
+      <arg name="initial_pose_x" value="$(arg t2_initial_pose_x)" />
+      <arg name="initial_pose_y" value="$(arg t2_initial_pose_y)" />
+      <arg name="initial_pose_a" value="$(arg t2_initial_pose_a)" />
+    </include>
+  </group>
+
+  <!-- ################# turtlebot3 ############## -->
+  <group ns="turtlebot3" if="$(arg turtlebot3)">
+    <param name="tf_prefix" value="turtlebot3_tf" />
+
+    <!-- Navigation -->
+    <include file="$(find multi_turtlebot_navigation)/launch/move_base_amcl.launch">
+      <arg name="robot" value="turtlebot3" />
+      <arg name="map_file" value="$(arg map_file)" />
+
+      <arg name="initial_pose_x" value="$(arg t3_initial_pose_x)" />
+      <arg name="initial_pose_y" value="$(arg t3_initial_pose_y)" />
+      <arg name="initial_pose_a" value="$(arg t3_initial_pose_a)" />
+    </include>
+  </group>
 
   <!-- Next best view -->
   <include file="$(find lucia_launch)/launch/includes/next_best_view_lucia_turtlebot.launch">
