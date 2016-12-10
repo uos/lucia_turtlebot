@@ -7,7 +7,7 @@
   <arg if="$(arg turtlebot2)" name="robot" value="turtlebot2" />
   <arg if="$(arg turtlebot3)" name="robot" value="turtlebot3" />
 
-  <arg name="map_file_only_walls" default="$(find lucia_gazebo_worlds)/maps/lucia_arena_only_walls.yaml"/>
+  <arg name="map_file_only_walls" default="$(find lucia_turtlebot_bringup)/maps/lucia_arena_real_only_walls.yaml"/>
 
   <group ns="$(arg robot)">
     <!-- Top camera -->

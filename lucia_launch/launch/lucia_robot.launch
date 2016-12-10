@@ -1,6 +1,6 @@
 <launch>
   <arg name="robot" />  <!-- "turtlebot1", "turtlebot2" or "turtlebot3" -->
-  <arg name="map_file" default="$(find lucia_gazebo_worlds)/maps/lucia_arena.yaml"/>
+  <arg name="map_file" default="$(find lucia_turtlebot_bringup)/maps/lucia_arena_real.yaml"/>
 
   <arg name="initial_pose_x" default="0.0"/>
   <arg name="initial_pose_y" default="0.0"/>
