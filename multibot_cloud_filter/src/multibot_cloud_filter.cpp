@@ -70,12 +70,20 @@ void callback(const PointCloudT::ConstPtr &cloud_in)
       if (!tf_->waitForTransform(other_robot_frames_[j],
                                  cloud_vg->header.frame_id,
                                  ros::Time().fromNSec(cloud_vg->header.stamp * 1000),
-                                 ros::Duration(3.0)))
+                                 ros::Duration(5.0)))
       {
-        return;
+        ROS_WARN("Waited for transform from %s to %s unsuccessfully, will not filter out other robot!",
+                 other_robot_frames_[j].c_str(),
+                 cloud_vg->header.frame_id.c_str());
+        continue;
       }
       if (!pcl_ros::transformPointCloud(other_robot_frames_[j], *cloud_vg, *cloud_transformed, *tf_))
-        return;
+      {
+        ROS_WARN("Failed to transform cloud from %s to %s, will not filter out other robot!!",
+                 other_robot_frames_[j].c_str(),
+                 cloud_vg->header.frame_id.c_str());
+        continue;
+      }
       cloud_transformed->header.stamp = cloud_vg->header.stamp;
       cloud_transformed->header.frame_id = other_robot_frames_[j];
       assert(cloud_vg->size() == cloud_transformed->size());
@@ -124,9 +132,9 @@ int main(int argc, char **argv)
   voxel_size_ = private_nh.param("voxel_size", 0.05);
   robot_radius_ = private_nh.param("robot_radius", 0.2);
 
-  pub_ = nh.advertise<PointCloudT>("cloud_out", 10);
+  pub_ = nh.advertise<PointCloudT>("cloud_out", 1);
 
-  tf_ = new tf::TransformListener(nh, ros::Duration(3.0));
+  tf_ = new tf::TransformListener(nh, ros::Duration(10.0));
   ros::Duration(3.0).sleep();   // allow TF buffer to fill up
 
   std::string map_frame;
@@ -143,7 +151,7 @@ int main(int argc, char **argv)
       if (!tf_->waitForTransform(tmp_other_robot_frames[j],
                                  map_frame,
                                  ros::Time(),
-                                 ros::Duration(3.0)))
+                                 ros::Duration(5.0)))
       {
         ROS_WARN("Warning: skipping other robot frame %s", tmp_other_robot_frames[j].c_str());
       }
