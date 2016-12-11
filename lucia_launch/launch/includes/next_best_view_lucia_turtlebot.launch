@@ -3,7 +3,7 @@
   <arg name="sim" default="false" />
   <arg name="map_file_only_walls" default="$(find lucia_gazebo_worlds)/maps/lucia_arena_only_walls.yaml"/>
 
-  <node if="$(arg sim)" name="map_server_only_walls" pkg="map_server" type="map_server" args="$(arg map_file_only_walls)" ns="only_walls" output="screen">
+  <node name="map_server_only_walls" pkg="map_server" type="map_server" args="$(arg map_file_only_walls)" ns="only_walls" output="screen">
     <param name="frame_id" type="string" value="/map"/>
   </node>
 
