@@ -16,14 +16,15 @@
     <remap from="cloud_out" to="top_camera/depth/motion_filtered/points" />
   </node>
 
-  <node     if="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth/motion_filtered/points            2 top_camera/depth/motion_filtered/throttled/points" />
-  <node unless="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth_registered/points 2 top_camera/depth_registered/throttled/points" />
+  <node     if="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth/motion_filtered/points 1 top_camera/depth/motion_filtered/throttled/points" />
+  <node unless="$(arg sim)" name="kinect_throttle" type="throttle" pkg="topic_tools" args="messages top_camera/depth_registered/points      1 top_camera/depth_registered/throttled/points" />
 
   <node name="multibot_cloud_filter" pkg="multibot_cloud_filter" type="multibot_cloud_filter" output="screen">
     <remap     if="$(arg sim)" from="cloud_in" to="top_camera/depth/motion_filtered/throttled/points" />
     <remap unless="$(arg sim)" from="cloud_in" to="top_camera/depth_registered/throttled/points" />
     <remap from="cloud_out" to="/all_top_cameras" />
     <param name="robot_radius" value="0.3" />
+    <param name="voxel_size" value="0.1" />
     <rosparam param="other_robot_frames">
       - "/turtlebot1_tf/base_footprint"
       - "/turtlebot2_tf/base_footprint"
