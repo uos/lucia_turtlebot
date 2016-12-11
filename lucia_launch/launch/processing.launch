@@ -17,4 +17,7 @@
   <include file="$(find lucia_launch)/launch/includes/object_search_manager.launch">
     <arg name="sim" value="$(arg sim)" />
   </include>
+
+  <!-- Lucia services (for MetaCSP tutorial) -->
+  <node pkg="lucia_services" type="lucia_services_node" name="lucia_services_node" output ="screen" />
 </launch>
