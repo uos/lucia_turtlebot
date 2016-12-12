@@ -24,7 +24,7 @@
     <param name="log_dir" type="string" value="$(arg log_dir)" />
 
     <!-- set planning mode. available: search, iw, id -->
-    <param name="planning_mode" type="string" value="search" />
+    <param name="planning_mode" type="string" value="tutorial-planner" />
 
     <!-- maximum depth to allow branching -->
     <param name="depth_limit" type="int" value="2" />
