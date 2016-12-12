@@ -146,7 +146,7 @@ rosbag play --clock -d 1 tableandchairs/tableandchairs1.bag
 
 * Download [Protégé 5.1.0](http://protege.stanford.edu/products.php#desktop-protege), unzip, start `run.sh`.
 * Enable Window -> Tabs -> SWRL Tab.
-* Open `semantic_furniture_classifier/semantic_furniture_classifier_project/owl/furniture.owl`.
+* Open `~/catkin_ws/src/semantic_furniture_classifier/semantic_furniture_classifier_project/owl/furniture.owl`.
 * Look around in the "Entities" tab. You don't need to change anything here.
 * Open the SWRL tab. Your goal is to add rules to classify a chair. For this,
   you need to add two rules: one that classifies certain HorizontalPlanes as
@@ -156,6 +156,34 @@ rosbag play --clock -d 1 tableandchairs/tableandchairs1.bag
 * Save the ontology file.
 * Restart `semantic_furniture_classifier_node` and `rosbag`, and look at the
   RViz markers. When two ChairSeatPlane labels appear, you have succeeded! :)
+
+
+Instructions for the FLAP4CAOS tutorial (Tue)
+---------------------------------------------
+
+Your task: Develop your own search strategy for active perception (see slides). In short:
+
+* Follow the instructions below to start everything in Gazebo with only one turtlebot.
+* Watch the results in RViz.
+* Cancel everything again.
+* Edit `~/catkin_ws/src/uos_active_perception/race_object_search/src/search_planner_tutorial.h`
+  to implement a brilliant new search strategy.
+
+  - All that is required is that `makePlanRecursive()` returns a sequence of actions.
+  - The first action will be executed, then the planner will be called again,
+    so returning only the next action is also valid (if you want to implement a
+    more reactive approach instead of planning to the end).
+  - To give your planner more time, you can disable the timeout in the code or in
+    `~/catkin_ws/src/lucia_turtlebot/lucia_launch/launch/includes/object_search_manager.launch`.
+
+* Then:
+
+```bash
+cd ~/catkin_ws
+catkin_make -DCMAKE_BUILD_TYPE=RelWithDebugInfo --pkg race_object_search
+```
+
+* Rinse, repeat.
 
 
 Running in Gazebo
