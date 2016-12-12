@@ -164,3 +164,48 @@ Gazebo world, model and launch files for the Lucia arena.
 ### multi_turtlebot_navigation
 
 Launch files to bring up navigation (move_base, amcl) on multiple turtlebots.
+
+Trying out your code with the Turtlebots
+----------------------------------------
+
+Relevant addresses and other info
+- Basestation: 10.0.0.200
+- Turtlebot laptops:
+ - perception1 (10.0.0.211 iran/admin123)
+ - perception2 (10.0.0.212 robot/robot)
+ - perception3 (10.0.0.213 robot/robot)
+
+Instructions
+- Start the following on basestation
+```bash
+roscore
+roslaunch lucia_launch rviz.launch
+```
+- **For the FLAP4CAOS tutorial (Tue):** make sure your code is puched on your group's Git repo, checked out and compiled on perception1-3
+
+- Start the following on perception1-3
+```bash
+roslaunch lucia_launch lucia_robot.launch robot:=turtlebot1
+roslaunch lucia_launch lucia_robot.launch robot:=turtlebot2
+roslaunch lucia_launch lucia_robot.launch robot:=turtlebot3
+```
+- Unplug the turtlebots you are using, place them in the arena and provide pose estimate for each via Rviz
+- Send a 2D nav goal for each robot
+- Start the following on perception1-3
+```bash
+roslaunch lucia_launch perception_laptop.launch turtlebot1:=true
+roslaunch lucia_launch perception_laptop.launch turtlebot2:=true
+roslaunch lucia_launch perception_laptop.launch turtlebot3:=true
+```
+- **For the FLAP4CAOS tutorial (Tue):** also start the following on perception1-3
+```bash
+ROS_NAMESPACE=turtlebot1 rosrun race_object_search object_search_manager_test p lucia_area_sw 0.4 lucia_area_nw 0.4 lucia_area_e 0.4 min_p_succ 0.05
+ROS_NAMESPACE=turtlebot2 rosrun race_object_search object_search_manager_test p lucia_area_sw 0.4 lucia_area_nw 0.4 lucia_area_e 0.4 min_p_succ 0.05
+ROS_NAMESPACE=turtlebot3 rosrun race_object_search object_search_manager_test p lucia_area_sw 0.4 lucia_area_nw 0.4 lucia_area_e 0.4 min_p_succ 0.05
+```
+- **For the MetaCSP tutorial (Wed):** Connect your laptop to LuciaSchool2 network (password on the whiteboard)
+- **For the MetaCSP tutorial (Wed):** add the following to your ```.bashrc``` and source it
+```bash
+ROS_MASTER_URI=http://10.0.0.200:11311
+ROS_HOSTNAME=<your-IP-address>
+```
