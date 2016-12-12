@@ -93,6 +93,7 @@ wstool up
 rosdep install --from-paths ./ -i -y --rosdistro indigo
 cd ~/catkin_ws
 source ~/catkin_ws/devel/setup.bash
+genjava_message_artifacts
 catkin_make -DCMAKE_BUILD_TYPE=Release
 ```
 
