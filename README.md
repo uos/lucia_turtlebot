@@ -116,6 +116,48 @@ Go to Eclipse:
 - Browse to ~/catkin_ws/src/lucia16/metacsp_tutorial/multi_robot_active_perception/
 - Click Finish
 
+
+Instructions for the OWL-DL tutorial (Tue)
+------------------------------------------
+
+```bash
+roscd lvr_plane_classifier/
+git pull
+roscore
+
+# start rviz in a new terminal:
+rosrun rviz rviz -d $(rospack find lvr_plane_classifier)/rviz/semantic_furniture_recognition.rviz
+
+# start semantic_furniture_classifier_node in a new terminal:
+roscd semantic_furniture_classifier/semantic_furniture_classifier_project/
+build/install/semantic_furniture_classifier_project/bin/semantic_furniture_classifier_project com.github.semantic_furniture_classifier.semantic_furniture_classifier_project.SemanticFurnitureClassifierNode
+
+# start lvr_plane_classifier_node in a new terminal:
+roscd lvr_plane_classifier/
+wget http://kos.informatik.uos.de/lucia_data/tableandchairs.zip
+unzip tableandchairs.zip
+mkdir -p /tmp/tableandchairs
+rosrun lvr_plane_classifier lvr_plane_classifier_node tableandchairs/tableandchairs1.ply
+
+# instead of restarting the lvr_plane_classifier_node over and over, you can later run this to save time:
+roscd lvr_plane_classifier/
+rosbag play --clock -d 1 tableandchairs/tableandchairs1.bag
+```
+
+* Download [Protégé 5.1.0](http://protege.stanford.edu/products.php#desktop-protege), unzip, start `run.sh`.
+* Enable Window -> Tabs -> SWRL Tab.
+* Open `semantic_furniture_classifier/semantic_furniture_classifier_project/owl/furniture.owl`.
+* Look around in the "Entities" tab. You don't need to change anything here.
+* Open the SWRL tab. Your goal is to add rules to classify a chair. For this,
+  you need to add two rules: one that classifies certain HorizontalPlanes as
+  ChairSeatPlanes, and one that classifies certain VerticalPlanes as
+  ChairBackrestPlanes. If you want to take measurements, you can either use the
+  "Measure" tool in RViz, or simply take a ruler to the actual chairs.
+* Save the ontology file.
+* Restart `semantic_furniture_classifier_node` and `rosbag`, and look at the
+  RViz markers. When two ChairSeatPlane labels appear, you have succeeded! :)
+
+
 Running in Gazebo
 -----------------
 
@@ -163,7 +205,7 @@ roscore
 roslaunch lucia_launch rviz.launch
 ```
 
-- **For the FLAP4CAOS tutorial (Tue):** make sure your code is puched on your
+- **For the FLAP4CAOS tutorial (Tue):** make sure your code is pushed to your
   group's Git repo, checked out and compiled on perception1-3
 
 - Start the following on perception1-3
