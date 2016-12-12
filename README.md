@@ -100,6 +100,22 @@ catkin_make -DCMAKE_BUILD_TYPE=Release
 If you have `rosjava` installed, you may have to repeat the `catkin_make`
 command several times until it succeeds.
 
+
+Setting up your Eclipse workspace for the MetaCSP tutorial (Wed)
+----------------------------------------------------------------
+
+```bash
+cd ~/catkin_ws/src/lucia16/metacsp_tutorial
+./gradlew eclipse
+```
+
+Go to Eclipse:
+
+- make a new Java Project
+- unclick "Use default location"
+- Browse to ~/catkin_ws/src/lucia16/metacsp_tutorial/multi_robot_active_perception/
+- Click Finish
+
 Running in Gazebo
 -----------------
 
