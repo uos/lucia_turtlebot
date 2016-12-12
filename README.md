@@ -92,9 +92,8 @@ wstool merge https://raw.githubusercontent.com/uos/uos_rosinstalls/master/lucia2
 wstool up
 rosdep install --from-paths ./ -i -y --rosdistro indigo
 cd ~/catkin_ws
-source /opt/ros/indigo/setup.bash
-catkin_make -DCMAKE_BUILD_TYPE=Release
 source ~/catkin_ws/devel/setup.bash
+catkin_make -DCMAKE_BUILD_TYPE=Release
 ```
 
 If you have `rosjava` installed, you may have to repeat the `catkin_make`
