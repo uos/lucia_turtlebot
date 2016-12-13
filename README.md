@@ -146,7 +146,7 @@ rosbag play --clock -d 1 tableandchairs/tableandchairs1.bag
 
 * Download [Protégé 5.1.0](http://protege.stanford.edu/products.php#desktop-protege), unzip, start `run.sh`.
 * Enable Window -> Tabs -> SWRL Tab.
-* Open `~/catkin_ws/src/semantic_furniture_classifier/semantic_furniture_classifier_project/owl/furniture.owl`.
+* Open `~/catkin_ws/src/semantic_object_maps/semantic_furniture_classifier/semantic_furniture_classifier_project/owl/furniture.owl`.
 * Look around in the "Entities" tab. You don't need to change anything here.
 * Open the SWRL tab. Your goal is to add rules to classify a chair. For this,
   you need to add two rules: one that classifies certain HorizontalPlanes as
