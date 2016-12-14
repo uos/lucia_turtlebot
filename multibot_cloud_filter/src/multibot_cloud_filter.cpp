@@ -196,7 +196,7 @@ int main(int argc, char **argv)
     }
   }
 
-  ros::Subscriber sub(nh.subscribe("cloud_in", 10, callback));
+  ros::Subscriber sub(nh.subscribe("cloud_in", 1, callback));
 
   ros::spin();
 
