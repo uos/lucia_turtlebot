@@ -49,10 +49,16 @@
 
     <!-- mapping from frame_id in cloud_in topic to used camera_frame_id -->
     <!-- (has to use '\' instead of '/' in the keys to avoid expansion) -->
-    <rosparam param="frame_id_mapping">
+    <rosparam if="$(arg sim)" param="frame_id_mapping">
       {turtlebot1_tf\top_camera_depth_optical_frame: turtlebot1_tf/top_camera_depth_frame,
        turtlebot2_tf\top_camera_depth_optical_frame: turtlebot2_tf/top_camera_depth_frame,
        turtlebot3_tf\top_camera_depth_optical_frame: turtlebot3_tf/top_camera_depth_frame}
+    </rosparam>
+
+    <rosparam unless="$(arg sim)" param="frame_id_mapping">
+      {turtlebot1_tf\top_camera_rgb_optical_frame: turtlebot1_tf/top_camera_rgb_frame,
+       turtlebot2_tf\top_camera_rgb_optical_frame: turtlebot2_tf/top_camera_rgb_frame,
+       turtlebot3_tf\top_camera_rgb_optical_frame: turtlebot3_tf/top_camera_rgb_frame}
     </rosparam>
 
     <!-- frames / topics -->
