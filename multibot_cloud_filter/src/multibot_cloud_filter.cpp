@@ -51,7 +51,6 @@ std::vector<std::string> other_robot_frames_;
 
 double voxel_size_;
 double robot_radius_;
-std::string map_frame_;
 
 void callback(const PointCloudT::ConstPtr &cloud_in)
 {
@@ -62,35 +61,6 @@ void callback(const PointCloudT::ConstPtr &cloud_in)
   vg.setDownsampleAllData(false);
   vg.filter(*cloud_vg);
 
-  PointCloudT::Ptr cloud_map = boost::make_shared<PointCloudT>();
-  try
-  {
-    if (!tf_->waitForTransform(map_frame_,
-                               cloud_vg->header.frame_id,
-                               ros::Time().fromNSec(cloud_vg->header.stamp * 1000),
-                               ros::Duration(5.0)))
-    {
-      ROS_WARN("Waited for transform from %s to %s unsuccessfully, will ignore point cloud!",
-               map_frame_.c_str(),
-               cloud_vg->header.frame_id.c_str());
-      return;
-    }
-    if (!pcl_ros::transformPointCloud(map_frame_, *cloud_vg, *cloud_map, *tf_))
-    {
-      ROS_WARN("Failed to transform cloud from %s to %s, will ignore point cloud!",
-               map_frame_.c_str(),
-               cloud_vg->header.frame_id.c_str());
-      return;
-    }
-    cloud_map->header.stamp = cloud_vg->header.stamp;
-    cloud_map->header.frame_id = map_frame_;
-  }
-  catch (tf::TransformException ex)
-  {
-    ROS_ERROR("%s", ex.what());
-    return;
-  }
-
   std::vector<PointCloudT::Ptr> clouds_transformed;
   for (size_t j = 0; j < other_robot_frames_.size(); ++j)
   {
@@ -98,25 +68,25 @@ void callback(const PointCloudT::ConstPtr &cloud_in)
     try
     {
       if (!tf_->waitForTransform(other_robot_frames_[j],
-                                 cloud_map->header.frame_id,
-                                 ros::Time().fromNSec(cloud_map->header.stamp * 1000),
+                                 cloud_vg->header.frame_id,
+                                 ros::Time().fromNSec(cloud_vg->header.stamp * 1000),
                                  ros::Duration(5.0)))
       {
         ROS_WARN("Waited for transform from %s to %s unsuccessfully, will not filter out other robot!",
                  other_robot_frames_[j].c_str(),
-                 cloud_map->header.frame_id.c_str());
+                 cloud_vg->header.frame_id.c_str());
         continue;
       }
-      if (!pcl_ros::transformPointCloud(other_robot_frames_[j], *cloud_map, *cloud_transformed, *tf_))
+      if (!pcl_ros::transformPointCloud(other_robot_frames_[j], *cloud_vg, *cloud_transformed, *tf_))
       {
-        ROS_WARN("Failed to transform cloud from %s to %s, will not filter out other robot!",
+        ROS_WARN("Failed to transform cloud from %s to %s, will not filter out other robot!!",
                  other_robot_frames_[j].c_str(),
-                 cloud_map->header.frame_id.c_str());
+                 cloud_vg->header.frame_id.c_str());
         continue;
       }
-      cloud_transformed->header.stamp = cloud_map->header.stamp;
+      cloud_transformed->header.stamp = cloud_vg->header.stamp;
       cloud_transformed->header.frame_id = other_robot_frames_[j];
-      assert(cloud_map->size() == cloud_transformed->size());
+      assert(cloud_vg->size() == cloud_transformed->size());
       clouds_transformed.push_back(cloud_transformed);
     }
     catch (tf::TransformException ex)
@@ -127,10 +97,10 @@ void callback(const PointCloudT::ConstPtr &cloud_in)
   }
 
   PointCloudT::Ptr cloud_out = boost::make_shared<PointCloudT>();
-  cloud_out->reserve(cloud_map->size());
-  cloud_out->header = cloud_map->header;
+  cloud_out->reserve(cloud_vg->size());
+  cloud_out->header = cloud_vg->header;
 
-  for (size_t i = 0; i < cloud_map->size(); i++)
+  for (size_t i = 0; i < cloud_vg->size(); i++)
   {
     // only keep point if not close to any other robot frame
     bool keep_point = true;
@@ -147,7 +117,7 @@ void callback(const PointCloudT::ConstPtr &cloud_in)
     }
 
     if (keep_point)
-      cloud_out->push_back(cloud_map->points[i]);
+      cloud_out->push_back(cloud_vg->points[i]);
   }
 
   pub_.publish(cloud_out);
@@ -167,7 +137,8 @@ int main(int argc, char **argv)
   tf_ = new tf::TransformListener(nh, ros::Duration(10.0));
   ros::Duration(3.0).sleep();   // allow TF buffer to fill up
 
-  private_nh.param<std::string>("map_frame", map_frame_, "/map");
+  std::string map_frame;
+  private_nh.param<std::string>("map_frame", map_frame, "/map");
 
   std::vector<std::string> tmp_other_robot_frames;
   private_nh.getParam("other_robot_frames", tmp_other_robot_frames);
@@ -178,7 +149,7 @@ int main(int argc, char **argv)
     try
     {
       if (!tf_->waitForTransform(tmp_other_robot_frames[j],
-                                 map_frame_,
+                                 map_frame,
                                  ros::Time(),
                                  ros::Duration(5.0)))
       {
