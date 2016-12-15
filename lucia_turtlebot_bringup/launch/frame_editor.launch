@@ -1,4 +1,17 @@
 <?xml version="1.0"?>
+
+<!--
+How to calibrate the top camera on the lucia school turtlebots
+==============================================================
+
+* comment out sensor_asus_xtion_pro from
+  lucia_turtlebot_description/robots/turtlebot1.urdf.xacro
+* roslaunch lucia_turtlebot_bringup frame_editor.launch turtlebot1:=true
+* adjust the values in the GUI until the point cloud from the top camera
+  matches the point cloud from the bottom camera
+* update the values in turtlebot1.urdf.xacro with the values you found
+-->
+
 <launch>
   <arg name="turtlebot1" default="false" />
   <arg name="turtlebot2" default="false" />
